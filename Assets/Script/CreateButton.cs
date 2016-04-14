@@ -13,7 +13,7 @@ public class CreateButton : MonoBehaviour {
 	}
     public void Create()
     {
-        Vector3 inspos = new Vector3(GameObject.Find("2").transform.position.x, GameObject.Find("2").transform.position.y+2, GameObject.Find("2").transform.position.z);
+        Vector3 inspos = new Vector3(GameObject.Find("Cube").transform.position.x, GameObject.Find("Cube").transform.position.y+2, GameObject.Find("Cube").transform.position.z);
         Instantiate(RainDrop, inspos, Quaternion.identity);
     }
 }
