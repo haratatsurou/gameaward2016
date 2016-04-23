@@ -21,7 +21,7 @@ public class Goal : MonoBehaviour
         goal
             .Buffer(n)
             .FirstOrDefault()
-            .Subscribe(_ => { print("ゴール是よ"); });
+            .Subscribe(_ => { print("終わり"); });
 
 
     }
@@ -33,7 +33,7 @@ public class Goal : MonoBehaviour
             .Where(goaltag => goaltag.tag == "rain")
             .Subscribe(_ => {
                 i++;
-                count.text = i.ToString();
+                count.text = "触れた回数="+i.ToString()+"回";
             });
     }
 }
