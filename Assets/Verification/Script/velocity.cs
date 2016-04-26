@@ -14,6 +14,5 @@ public class velocity : MonoBehaviour {
     {
         var velocity = ball.GetComponent<Rigidbody>().velocity;
         var speed = Mathf.Abs(velocity.x + velocity.y);
-        //print("速さ＝" +speed);
     }
 }
