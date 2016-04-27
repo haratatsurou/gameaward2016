@@ -15,7 +15,6 @@ public class CreateButton : MonoBehaviour {
     }
 
     public void Create(string createpos = "upstart",float insposY=0.1f) {
-        //span秒後にintervalの間を開けてCreate()を実行
        hoeg= Observable.Timer(TimeSpan.FromSeconds(span) , TimeSpan.FromSeconds(2)).Subscribe(_ => {
             var createPos = GameObject.Find(createpos).transform;
             Vector3 inspos = new Vector3(createPos.position.x , createPos.position.y - insposY , createPos.position.z);
