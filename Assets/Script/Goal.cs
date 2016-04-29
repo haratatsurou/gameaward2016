@@ -38,9 +38,11 @@ public class Goal : MonoBehaviour
                     n = -n;
                 }
                 Vector3 inspos = new Vector3(createPos.position.x , createPos.position.y + n , createPos.position.z);
-               var dummy=Instantiate(RainDrop , inspos , Quaternion.identity)as GameObject;
-                float random = Random.Range(-4f , 2f);
-                dummy.GetComponent<Rigidbody>( ).AddForce( random, 0 , 0,ForceMode.Force);
+               var dummy=(GameObject)Instantiate(RainDrop , inspos , Quaternion.identity);
+                var rigidbody = dummy.GetComponent<Rigidbody>( );
+                float random = Random.Range(-10f , 5f);
+               rigidbody.AddForce( random, 0 , 0,ForceMode.Force);
+                rigidbody.mass = 0.1f;
                 //goaltag.gameObject.transform.position = inspos;
             });
     }
