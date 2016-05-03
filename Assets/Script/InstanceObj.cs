@@ -17,13 +17,13 @@ public class InstanceObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     }
     public void OnBeginDrag(PointerEventData obj) {
         createobj = Instantiate(insobj , fromScreenPostoWorldPos(obj) , insobj.transform.rotation) as GameObject;
-        createobj.GetComponent<BoxCollider>( ).enabled = false;
+        createobj.GetComponent<BoxCollider>( ).isTrigger = true;
     }
     public void OnDrag(PointerEventData obj) {
         createobj.transform.position = fromScreenPostoWorldPos(obj);
     }
     public void OnEndDrag(PointerEventData obj) {
-        createobj.GetComponent<BoxCollider>( ).enabled = true;
+        //createobj.GetComponent<BoxCollider>( ).isTrigger = false;
     }
     Vector2 fromScreenPostoWorldPos(PointerEventData ped) {
         Vector3 localpos = Vector3.zero;
