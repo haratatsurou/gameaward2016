@@ -25,4 +25,11 @@ public class Hudcontrol : MonoBehaviour {
 
             UI_Element.anchoredPosition = WorldObject_ScreenPosition;
     }
+    //スクロールバーの可視化について
+    public void Visibled(bool HudVisible=false) {
+        var scrollbar=GameObject.Find("Rotation");
+        scrollbar.GetComponent<Scrollbar>( ).interactable = HudVisible;
+        scrollbar.GetComponent<Image>( ).enabled = HudVisible;
+        GameObject.Find("Rotation/Sliding Area/Handle").GetComponent<Image>( ).enabled = HudVisible;        
+    }
 }
