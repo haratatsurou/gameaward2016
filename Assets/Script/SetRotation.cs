@@ -4,10 +4,14 @@ using UnityEngine.UI;
 using UniRx;
 using UniRx.Triggers;
 using System;
+using UnityEngine.SceneManagement;
 
 public class SetRotation : MonoBehaviour {
     public LayerMask mask;
-    void Start() { DoubleClick( ); }
+    void Start() {
+        DoubleClick( );
+        SceneManager.LoadScene("SetUI" , LoadSceneMode.Additive);
+    }
 
     public void DoubleClick() {
         GameObject obj = null;
@@ -27,27 +31,29 @@ public class SetRotation : MonoBehaviour {
         var click = this.UpdateAsObservable( )
             .Where(_ => Input.GetMouseButtonDown(0) && getObj);
         click
-            .Buffer(click.Throttle(TimeSpan.FromMilliseconds(200)))
+            .Buffer(click.Throttle(TimeSpan.FromMilliseconds(150)))
             .Where(x => x.Count >= 2)
-            .FirstOrDefault()
+            .FirstOrDefault( )
             .Subscribe(_ => {
+                obj.GetComponent<operation>( ).moveflag = true;
                 ModeRotate(obj);
                 serchOjb.Dispose( );
                 getObj = false;
-                obj.GetComponent<operation>( ).moveflag = true;
+                rotatePos = Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
             });
     }
-
+    float rotatePos = 0;
     void ModeRotate(GameObject rotateObj) {
-       
+        
         var rotate = this.UpdateAsObservable( )
             .Where(_ => Input.GetMouseButton(0));
         rotate
-            .TakeUntil(this.UpdateAsObservable().Where(_=>Input.GetMouseButtonUp(0)))
+            .TakeUntil(this.UpdateAsObservable( ).Where(_ => Input.GetMouseButtonUp(0)))
             .Subscribe(_ => {
                 var hoge2 = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                var rotatePos = hoge2.y;
-                rotateObj.transform.Rotate(new Vector3(0 , 0 , rotatePos) , Space.World);
+                var result = hoge2.y - rotatePos;
+                
+                rotateObj.transform.Rotate(new Vector3(0 , 0 , result) , Space.World);
 
             });
 
@@ -59,6 +65,7 @@ public class SetRotation : MonoBehaviour {
             .Subscribe(_ => {
                 DoubleClick( );
                 rotateObj.GetComponent<operation>( ).moveflag = false;
+                rotatePos = 0;
             });
 
     }
