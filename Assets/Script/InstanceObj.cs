@@ -12,11 +12,9 @@ public class InstanceObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     }
 
-    void Update() {
-
-    }
     public void OnBeginDrag(PointerEventData obj) {
         createobj = Instantiate(insobj , fromScreenPostoWorldPos(obj) , insobj.transform.rotation) as GameObject;
+        createobj.name = this.gameObject.name;
         createobj.GetComponent<BoxCollider>( ).isTrigger = true;
     }
     public void OnDrag(PointerEventData obj) {
@@ -24,6 +22,7 @@ public class InstanceObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     }
     public void OnEndDrag(PointerEventData obj) {
         //createobj.GetComponent<BoxCollider>( ).isTrigger = false;
+        this.GetComponent<InstanceObj>( ).enabled = false;
     }
     Vector2 fromScreenPostoWorldPos(PointerEventData ped) {
         Vector3 localpos = Vector3.zero;

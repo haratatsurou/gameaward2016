@@ -35,11 +35,15 @@ public class SetRotation : MonoBehaviour {
             .Where(x => x.Count >= 2)
             .FirstOrDefault( )
             .Subscribe(_ => {
-                obj.GetComponent<operation>( ).moveflag = true;
-                ModeRotate(obj);
-                serchOjb.Dispose( );
-                getObj = false;
-                rotatePos = Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
+                try {
+                    obj.GetComponent<operation>( ).moveflag = true;
+                    ModeRotate(obj);
+                    serchOjb.Dispose( );
+                    getObj = false;
+                    rotatePos = Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
+                } catch ( NullReferenceException ) {
+
+                }
             });
     }
     float rotatePos = 0;
