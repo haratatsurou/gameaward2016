@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class SetRotation : MonoBehaviour {
     public LayerMask mask;
-    void Start() {
+    void Awake() {
         DoubleClick( );
         SceneManager.LoadScene("SetUI" , LoadSceneMode.Additive);
     }
@@ -16,35 +16,41 @@ public class SetRotation : MonoBehaviour {
     public void DoubleClick() {
         GameObject obj = null;
         var getObj = false;
-        //ゲームオブジェクト取得
-        var serchOjb = this.UpdateAsObservable( )
-            .Where(_ => Input.GetMouseButton(0))
-            .Subscribe(_ => {
-                try {
-                    obj = DecisionObj( );
-                    getObj = true;
-                } catch ( NullReferenceException ) {
-                    getObj = false;
-                }
-            });
+            //ゲームオブジェクト取得
+            var serchOjb = this.UpdateAsObservable( )
+                .Where(_ => Input.GetMouseButton(0))
+                .Subscribe(_ => {
+                    try {
+                        obj = DecisionObj( );
+                        if ( obj.tag == "road" ) {
+                            getObj = true;
+                        }else {
+                            getObj = false;
+                        }
+                        } catch ( NullReferenceException ) {
+                        getObj = false;
+                    }
+                });
 
-        var click = this.UpdateAsObservable( )
-            .Where(_ => Input.GetMouseButtonDown(0) && getObj);
-        click
-            .Buffer(click.Throttle(TimeSpan.FromMilliseconds(150)))
-            .Where(x => x.Count >= 2)
-            .FirstOrDefault( )
-            .Subscribe(_ => {
-                try {
-                    obj.GetComponent<operation>( ).moveflag = true;
+            var click = this.UpdateAsObservable( )
+                .Where(_ => Input.GetMouseButtonDown(0) && getObj);
+            click
+                .Buffer(click.Throttle(TimeSpan.FromMilliseconds(150)))
+                .Where(x => x.Count >= 2)
+                .FirstOrDefault( )
+                .Subscribe(_ => {
+                    try {
+                        CreateButton.moveflag = true;
+                    //obj.GetComponent<operation>( ).moveflag = true;
                     ModeRotate(obj);
-                    serchOjb.Dispose( );
-                    getObj = false;
-                    rotatePos = Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
-                } catch ( NullReferenceException ) {
+                        serchOjb.Dispose( );
 
-                }
-            });
+                        getObj = false;
+                        rotatePos = Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
+                    } catch ( NullReferenceException ) {
+
+                    }
+                });
     }
     float rotatePos = 0;
     void ModeRotate(GameObject rotateObj) {
@@ -56,7 +62,6 @@ public class SetRotation : MonoBehaviour {
             .Subscribe(_ => {
                 var hoge2 = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 var result = hoge2.y - rotatePos;
-                
                 rotateObj.transform.Rotate(new Vector3(0 , 0 , result) , Space.World);
 
             });
@@ -68,7 +73,8 @@ public class SetRotation : MonoBehaviour {
         stop
             .Subscribe(_ => {
                 DoubleClick( );
-                rotateObj.GetComponent<operation>( ).moveflag = false;
+                CreateButton.moveflag = false;
+                //rotateObj.GetComponent<operation>( ).moveflag = false;
                 rotatePos = 0;
             });
 

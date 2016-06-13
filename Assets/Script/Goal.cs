@@ -4,23 +4,26 @@ using UniRx;
 using UnityEngine.UI;
 using UniRx.Triggers;
 
-public class Goal : MonoBehaviour
-{
+public class Goal : MonoBehaviour {
     public GameObject RainDrop;
     private Text count;
-    void Start()
-    {
+    private Button @return;
+    void Start() {
         //CountGoal();
-        GoalRain();
+        GoalRain( );
+        @return = GameObject.Find("UI/Return").GetComponent<Button>( );
+
     }
-    //void CountGoal()
-    //{
-    //    var goal = this.OnTriggerEnterAsObservable()
-    //        .Where(goaltag => goaltag.tag == "rain");
-    //    goal
-    //        .Buffer(n)
-    //        .FirstOrDefault()
-    //        .Subscribe(_ => { print("終わり"); });
+    void CountGoal() {
+        var goal = this.OnTriggerEnterAsObservable( )
+            .Where(goaltag => goaltag.tag == "rain");
+        goal
+            .Buffer(GameObject.Find("system").GetComponent<CreateButton>( ).Limit - 1)
+            .FirstOrDefault( )
+            .Subscribe(_ => {
+               @return.interactable = true;
+            });
+    }
 
 
    
@@ -29,15 +32,12 @@ public class Goal : MonoBehaviour
         var goal = this.OnTriggerEnterAsObservable()
             .Where(goaltag => goaltag.tag == "rain")
             .Subscribe(goaltag => {
-                // Destroy(goaltag.gameObject);
                 StartCoroutine("destroyobj",goaltag.gameObject);
-                
-                //goaltag.gameObject.transform.position = inspos;
+                CountGoal( );
             });
     }
 
     IEnumerator destroyobj(GameObject destroy) {
-
         yield return new WaitForSeconds(0.1f);
         this.UpdateAsObservable( )
             .Subscribe(_ => {
@@ -46,7 +46,6 @@ public class Goal : MonoBehaviour
 
                 if ( destroy.transform.localScale.y < 0 ) {
                     Destroy(destroy);
-                    //}
                     float n = 0.4f;
                     var createPos = this.gameObject.transform;
 

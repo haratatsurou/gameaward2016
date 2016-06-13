@@ -5,53 +5,73 @@ using System;
 using UniRx.Triggers;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Linq;
 public class CreateButton : MonoBehaviour {
+    public static bool moveflag = false;
+    public static bool colliderobject = false;
     public GameObject RainDrop;
     public int span;
     public IDisposable hoeg;
-    int i;
+    [HideInInspector]
+    public int i;
     [Header("作り出すオブジェクトの個数")]
     public int Limit;
     private Button returnbutton;
 
+    [Header("オブジェクトが設置されたかどうか")]
+    public bool[] set = new bool[3];
     //public string createpos = "upstart";
     void Start() {
         returnbutton = GameObject.Find("UI/Return").GetComponent<Button>( );
         var endins = this.UpdateAsObservable( )
-            .Where(_ => Limit < i);
+            .Where(_ => Limit - 1 < i);//制限に達したら水玉を出すのをやメル
         endins
             .Subscribe(_ => {
                 hoeg.Dispose( );
-                returnbutton.interactable = true;
+                ////反転ボタンを押せるように
+                //returnbutton.interactable = true;
 
             });
     }
 
     public void Create(string createpos = "upstart" , float insposY = 0.1f) {
+        i = 0;
+        //一定間隔で水玉を出す
         hoeg = Observable.Timer(TimeSpan.FromSeconds(span) , TimeSpan.FromSeconds(2)).Subscribe(_ => {
             var createPos = GameObject.Find(createpos).transform;
             Vector3 inspos = new Vector3(createPos.position.x , createPos.position.y - insposY , createPos.position.z);
             Instantiate(RainDrop , inspos , Quaternion.identity);
             i++;
         });
-
-
-
-
+        print(createpos);
+        if ( createpos == "downstart" ) {
+            GameObject.Find("downgoal").GetComponent<BoxCollider>( ).isTrigger = false;
+        }
     }
     //初スタートするとき
     public void Create(string createpos = "upstart") {
-        hoeg = Observable.Timer(TimeSpan.FromSeconds(span) , TimeSpan.FromSeconds(2)).Subscribe(_ => {
-            var createPos = GameObject.Find(createpos).transform;
-            Vector3 inspos = new Vector3(createPos.position.x , createPos.position.y - 0.1f , createPos.position.z);
-            Instantiate(RainDrop , inspos , Quaternion.identity);
-            i++;
-        });
-        GameObject[] objs = GameObject.FindGameObjectsWithTag("road");
-        foreach ( GameObject obj in objs ) {
-            obj.GetComponent<operation>( ).colliders[1].isTrigger = false;
-
+        if ( set.All(flag => flag) ) {
+            if ( !colliderobject ) {
+                hoeg = Observable.Timer(TimeSpan.FromSeconds(span) , TimeSpan.FromSeconds(2)).Subscribe(_ => {
+                    var createPos = GameObject.Find(createpos).transform;
+                    Vector3 inspos = new Vector3(createPos.position.x , createPos.position.y - 0.1f , createPos.position.z);
+                    Instantiate(RainDrop , inspos , Quaternion.identity);
+                    GameObject.Find("UI/play").GetComponent<Button>( ).interactable = false;
+                    moveflag = true;
+                    i++;
+                });
+                GameObject[] objs = GameObject.FindGameObjectsWithTag("road");
+                foreach ( GameObject obj in objs ) {
+                    obj.GetComponent<operation>( ).colliders[1].isTrigger = false;
+                }
+            } else {
+                GameObject.Find("dialog").GetComponent<dialog>( ).display("オブジェクトが接触しているよ");
+            }
+        } else {
+            GameObject.Find("dialog").GetComponent<dialog>( ).display("エラー置いてないオブジェクトがあるかもね");
         }
+        
     }
+
 
 }

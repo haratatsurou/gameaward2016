@@ -18,14 +18,18 @@ public class dialog : MonoBehaviour, function {
         Time.timeScale = 1;
 
     }
+    //dialogを表示する
     public void display(string text) {
         this.GetComponent<Canvas>( ).enabled = true;
         Time.timeScale = 0;
+        CreateButton.moveflag = true;
         GameObject.Find("UI").GetComponent<GraphicRaycaster>( ).enabled = false;//playボタンとか押せないようにする
         displaytext(text);
     }
     public void returnGame() {
+        CreateButton.moveflag = false;
         this.GetComponent<Canvas>( ).enabled = false;
+        GameObject.Find("UI").GetComponent<GraphicRaycaster>( ).enabled = true;
         Time.timeScale = 1;
     }
     public void displaytext(string contents) {

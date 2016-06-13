@@ -12,6 +12,7 @@ public class Hudcontrol : MonoBehaviour {
     }
     //                 追従させるオブジェクト
     public void Control(GameObject WorldObject) {
+        if ( !CreateButton.moveflag ) {
 
             RectTransform UI_Element = GameObject.Find("UI/Rotation").GetComponent<RectTransform>( );
             RectTransform CanvasRect = GameObject.Find("UI").GetComponent<RectTransform>( );
@@ -24,6 +25,7 @@ public class Hudcontrol : MonoBehaviour {
                 ( ( ViewportPosition.y * CanvasRect.sizeDelta.y ) - ( CanvasRect.sizeDelta.y * 0.5f ) ));
 
             UI_Element.anchoredPosition = WorldObject_ScreenPosition;
+        }
     }
     //スクロールバーの可視化について
     public void Visibled(bool HudVisible=false) {
