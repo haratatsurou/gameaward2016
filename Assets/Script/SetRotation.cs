@@ -12,6 +12,7 @@ public class SetRotation : MonoBehaviour {
         DoubleClick( );
         SceneManager.LoadScene("SetUI" , LoadSceneMode.Additive);
     }
+    void Start() { }
 
     public void DoubleClick() {
         GameObject obj = null;
