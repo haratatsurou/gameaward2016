@@ -8,54 +8,80 @@ using UnityEngine.SceneManagement;
 
 public class SetRotation : MonoBehaviour {
     public LayerMask mask;
+    [SerializeField, Range(0.2f , 2f), Header("長押しした時間")]
+    public float longTap;
+
+    private Vector3? oldmousepos;
     void Awake() {
-        DoubleClick( );
+        LongTap( );
         SceneManager.LoadScene("SetUI" , LoadSceneMode.Additive);
     }
     void Start() { }
 
-    public void DoubleClick() {
+    public void LongTap() {
         GameObject obj = null;
         var getObj = false;
-            //ゲームオブジェクト取得
-            var serchOjb = this.UpdateAsObservable( )
-                .Where(_ => Input.GetMouseButton(0))
-                .Subscribe(_ => {
-                    try {
-                        obj = DecisionObj( );
-                        if ( obj.tag == "road" ) {
-                            getObj = true;
-                        }else {
-                            getObj = false;
+        //ゲームオブジェクト取得----------------------------------
+        var serchOjb = this.UpdateAsObservable( )
+            .Where(_ => Input.GetMouseButton(0))
+            .Subscribe(_ => {
+                try {
+                    obj = DecisionObj( );
+                    if ( obj.tag == "road" ) {
+                        getObj = true;
+                        if ( Input.GetMouseButtonDown(0) ) {
+                            oldmousepos = Input.mousePosition;
                         }
-                        } catch ( NullReferenceException ) {
-                        getObj = false;
-                    }
-                });
 
-            var click = this.UpdateAsObservable( )
-                .Where(_ => Input.GetMouseButtonDown(0) && getObj);
-            click
-                .Buffer(click.Throttle(TimeSpan.FromMilliseconds(150)))
-                .Where(x => x.Count >= 2)
-                .FirstOrDefault( )
-                .Subscribe(_ => {
-                    try {
-                        CreateButton.moveflag = true;
-                    //obj.GetComponent<operation>( ).moveflag = true;
+                    } else {
+                        getObj = false;
+                        oldmousepos = null;
+
+                    }
+                } catch ( NullReferenceException ) {
+                    getObj = false;
+                }
+            });
+        //---------------------------------------------------
+        ////ロングクリック----------------------------------------
+        var mouseDownStream = this.UpdateAsObservable( ).Where(_ => Input.GetMouseButtonDown(0));
+        var mouseUpStream = this.UpdateAsObservable( ).Where(_ => Input.GetMouseButtonUp(0));
+
+        mouseDownStream
+            //マウスクリックされたら3秒後にOnNextを流す
+            .SelectMany(_ => Observable.Timer(TimeSpan.FromSeconds(longTap)))
+            .Where(_ => getObj)//オブジェクトを取得
+            .Do(a => print("GO1"))
+            .Where(_ => CheckMove(Input.mousePosition))
+            .Do(a => print("GO2"))
+             //途中でMouseUpされたらストリームをリセット
+             .TakeUntil(mouseUpStream)
+            //マウスの座標が変わってたらストリームをリセット
+            .RepeatUntilDestroy(this.gameObject)
+            .Subscribe(_ => {
+                try {
+                    CreateButton.moveflag = true;
                     ModeRotate(obj);
-                        serchOjb.Dispose( );
+                    serchOjb.Dispose( );
+                    getObj = false;
+                    rotatePos = Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
+                } catch ( NullReferenceException ) {
 
-                        getObj = false;
-                        rotatePos = Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
-                    } catch ( NullReferenceException ) {
-
-                    }
-                });
+                }
+            });
+        //長押しのキャンセル判定
+        mouseDownStream.Timestamp( )
+            .Zip(mouseUpStream.Timestamp( ) , (d , u) => ( u.Timestamp - d.Timestamp ).TotalMilliseconds / 1000.0f)
+            .Where(time => time < longTap)
+            .Subscribe(t => {
+                //Debug.Log(t + "秒でキャンセル")
+            });
+        //dontmove
+        //    .Subscribe(hoge => { print("asdf"); });
     }
     float rotatePos = 0;
     void ModeRotate(GameObject rotateObj) {
-        
+
         var rotate = this.UpdateAsObservable( )
             .Where(_ => Input.GetMouseButton(0));
         rotate
@@ -73,12 +99,20 @@ public class SetRotation : MonoBehaviour {
             .FirstOrDefault( );
         stop
             .Subscribe(_ => {
-                DoubleClick( );
+                LongTap( );
                 CreateButton.moveflag = false;
-                //rotateObj.GetComponent<operation>( ).moveflag = false;
                 rotatePos = 0;
             });
 
+    }
+    //指の座標が動いたか否かの判定
+    bool CheckMove(Vector3 newmousepos) {
+        if ( oldmousepos == newmousepos ) {
+            return true;
+        } else {
+            oldmousepos = null;
+            return false;
+        }
     }
 
     //触れたオブジェクトを返す
