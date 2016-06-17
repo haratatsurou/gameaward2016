@@ -50,12 +50,8 @@ public class CreateButton : MonoBehaviour {
     //初スタートするとき
     public void Create(string createpos = "upstart") {
         if ( set.All(flag => flag) ) {
-<<<<<<< HEAD
-            if ( !colliderobject ) {//ゲームスタート
-=======
             if ( !colliderobject ) {
                 GameObject.Find("UI/play").GetComponent<Button>( ).interactable = false;
->>>>>>> master
                 hoeg = Observable.Timer(TimeSpan.FromSeconds(span) , TimeSpan.FromSeconds(2)).Subscribe(_ => {
                     var createPos = GameObject.Find(createpos).transform;
                     Vector3 inspos = new Vector3(createPos.position.x , createPos.position.y - 0.1f , createPos.position.z);
