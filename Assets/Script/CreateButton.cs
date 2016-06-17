@@ -43,7 +43,6 @@ public class CreateButton : MonoBehaviour {
             Instantiate(RainDrop , inspos , Quaternion.identity);
             i++;
         });
-        print(createpos);
         if ( createpos == "downstart" ) {
             GameObject.Find("downgoal").GetComponent<BoxCollider>( ).isTrigger = false;
         }
@@ -51,12 +50,17 @@ public class CreateButton : MonoBehaviour {
     //初スタートするとき
     public void Create(string createpos = "upstart") {
         if ( set.All(flag => flag) ) {
+<<<<<<< HEAD
             if ( !colliderobject ) {//ゲームスタート
+=======
+            if ( !colliderobject ) {
+                GameObject.Find("UI/play").GetComponent<Button>( ).interactable = false;
+>>>>>>> master
                 hoeg = Observable.Timer(TimeSpan.FromSeconds(span) , TimeSpan.FromSeconds(2)).Subscribe(_ => {
                     var createPos = GameObject.Find(createpos).transform;
                     Vector3 inspos = new Vector3(createPos.position.x , createPos.position.y - 0.1f , createPos.position.z);
                     Instantiate(RainDrop , inspos , Quaternion.identity);
-                    GameObject.Find("UI/play").GetComponent<Button>( ).interactable = false;
+                   
                     moveflag = true;
                     GameObject.Find("Main Camera").GetComponent<ObservableUpdateTrigger>( ).enabled = false;
                     i++;

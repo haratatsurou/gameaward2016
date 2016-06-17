@@ -26,13 +26,13 @@ public class dialog : MonoBehaviour, function {
         GameObject.Find("UI").GetComponent<GraphicRaycaster>( ).enabled = false;//playボタンとか押せないようにする
         displaytext(text);
     }
+    public void displaytext(string contents) {
+        text.text = contents;
+    }
     public void returnGame() {
         CreateButton.moveflag = false;
         this.GetComponent<Canvas>( ).enabled = false;
         GameObject.Find("UI").GetComponent<GraphicRaycaster>( ).enabled = true;
         Time.timeScale = 1;
-    }
-    public void displaytext(string contents) {
-        text.text = contents;
     }
 }

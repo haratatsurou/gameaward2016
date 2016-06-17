@@ -4,8 +4,7 @@ using UniRx;
 using UnityEngine.UI;
 using UniRx.Triggers;
 
-//くそコード
-public class Goal : MonoBehaviour {
+public class halfGoal : MonoBehaviour {
     public GameObject RainDrop;
     private Text count;
     private Button @return;
@@ -22,13 +21,10 @@ public class Goal : MonoBehaviour {
             .Buffer(GameObject.Find("system").GetComponent<CreateButton>( ).Limit - 1)
             .FirstOrDefault( )
             .Subscribe(_ => {
-                StageClear( );
+                @return.interactable = true; //反転できるように
             });
     }
-    void StageClear() {
 
-        GameObject.Find("clear").GetComponent<clearmessage>( ).displaytext("ステージクリアー");
-    }
    
     void GoalRain()
     {
@@ -46,6 +42,7 @@ public class Goal : MonoBehaviour {
             .Subscribe(_ => {
                 var time = Time.deltaTime;
                 destroy.transform.localScale -= new Vector3(time , time , time);
+                
 
                 if ( destroy.transform.localScale.y < 0 ) {
                     Destroy(destroy);
@@ -66,10 +63,11 @@ public class Goal : MonoBehaviour {
     void InstancedummyObj(Transform createPos,float n) {
         
         Vector3 inspos = new Vector3(createPos.position.x , createPos.position.y + n , createPos.position.z);
+
         var dummy = (GameObject)Instantiate(RainDrop , inspos , Quaternion.identity);
-        var rigidbody = dummy.GetComponent<Rigidbody>( );
-        float random = Random.Range(-17f , 5f);
         dummy.tag = "otherrain";
+        var rigidbody = dummy.GetComponent<Rigidbody>( );
+        float random = Random.Range(-17f , 7f);
         rigidbody.AddForce(random*10 , 0 , 0 , ForceMode.Force);
         rigidbody.mass = 0.1f;
     }
