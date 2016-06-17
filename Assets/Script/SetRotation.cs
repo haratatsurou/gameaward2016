@@ -10,7 +10,7 @@ public class SetRotation : MonoBehaviour {
     public LayerMask mask;
     [SerializeField, Range(0.2f , 2f), Header("長押しした時間")]
     public float longTap;
-
+    float rotatePos = 0;
     private Vector3? oldmousepos;
     void Awake() {
         LongTap( );
@@ -31,7 +31,6 @@ public class SetRotation : MonoBehaviour {
                         getObj = true;
                         if ( Input.GetMouseButtonDown(0) ) {
                             oldmousepos = new Vector3(Mathf.FloorToInt(Input.mousePosition.x) , Mathf.FloorToInt(Input.mousePosition.y));
-                            print(oldmousepos);
                         }
 
                     } else {
@@ -80,7 +79,6 @@ public class SetRotation : MonoBehaviour {
         //dontmove
         //    .Subscribe(hoge => { print("asdf"); });
     }
-    float rotatePos = 0;
     void ModeRotate(GameObject rotateObj) {
 
         var rotate = this.UpdateAsObservable( )
@@ -90,6 +88,10 @@ public class SetRotation : MonoBehaviour {
             .Subscribe(_ => {
                 var hoge2 = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 var result = hoge2.y - rotatePos;
+                if ( rotateObj.transform.localPosition.x - hoge2.x > 0 ) {
+                    result = -result;
+                } else {
+                }
                 rotateObj.transform.Rotate(new Vector3(0 , 0 , result) , Space.World);
 
             });
