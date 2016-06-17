@@ -30,7 +30,8 @@ public class SetRotation : MonoBehaviour {
                     if ( obj.tag == "road" ) {
                         getObj = true;
                         if ( Input.GetMouseButtonDown(0) ) {
-                            oldmousepos = Input.mousePosition;
+                            oldmousepos = new Vector3(Mathf.FloorToInt(Input.mousePosition.x) , Mathf.FloorToInt(Input.mousePosition.y));
+                            print(oldmousepos);
                         }
 
                     } else {
@@ -51,9 +52,9 @@ public class SetRotation : MonoBehaviour {
             //マウスクリックされたら3秒後にOnNextを流す
             .SelectMany(_ => Observable.Timer(TimeSpan.FromSeconds(longTap)))
             .Where(_ => getObj)//オブジェクトを取得
-            .Do(a => print("GO1"))
+            .DistinctUntilChanged( )
+            .ThrottleFrame(10)
             .Where(_ => CheckMove(Input.mousePosition))
-            .Do(a => print("GO2"))
              //途中でMouseUpされたらストリームをリセット
              .TakeUntil(mouseUpStream)
             //マウスの座標が変わってたらストリームをリセット
@@ -107,6 +108,7 @@ public class SetRotation : MonoBehaviour {
     }
     //指の座標が動いたか否かの判定
     bool CheckMove(Vector3 newmousepos) {
+        newmousepos= new Vector3(Mathf.FloorToInt(newmousepos.x) , Mathf.FloorToInt(newmousepos.y));
         if ( oldmousepos == newmousepos ) {
             return true;
         } else {
