@@ -19,7 +19,7 @@ public class Goal : MonoBehaviour {
         var goal = this.OnTriggerEnterAsObservable( )
             .Where(goaltag => goaltag.tag == "rain");
         goal
-            .Buffer(GameObject.Find("system").GetComponent<CreateButton>( ).Limit - 1)
+            .Buffer(StageManager.Instance.nowstage.UnLimit-1)
             .FirstOrDefault( )
             .Subscribe(_ => {
                 StageClear( );

@@ -9,19 +9,23 @@ using System.Linq;
 public class CreateButton : MonoBehaviour {
     public static bool moveflag = false;
     public static bool colliderobject = false;
-    public GameObject RainDrop;
+    private GameObject RainDrop;
     public int span;
     public IDisposable hoeg;
     [HideInInspector]
     public int i;
-    [Header("作り出すオブジェクトの個数")]
-    public int Limit;
+    private int Limit;
     private Button returnbutton;
 
-    [Header("オブジェクトが設置されたかどうか")]
-    public bool[] set = new bool[3];
-    //public string createpos = "upstart";
+    StageInfo manager;
+    //private bool[] set;
+    void Migration() {
+        manager = StageManager.Instance.nowstage;
+        Limit = manager.Limit;
+        RainDrop = manager.Rain;
+    }
     void Start() {
+        Migration( );
         returnbutton = GameObject.Find("UI/Return").GetComponent<Button>( );
         var endins = this.UpdateAsObservable( )
             .Where(_ => Limit - 1 < i);//制限に達したら水玉を出すのをやメル
@@ -47,9 +51,20 @@ public class CreateButton : MonoBehaviour {
             GameObject.Find("downgoal").GetComponent<BoxCollider>( ).isTrigger = false;
         }
     }
+    bool Match() {
+        bool flag = false;
+        for(int i=0 ;i<manager.setitem.Length ;i++ ) {
+            if( manager.setitem[i].SET_ITEM_FLAG ) {
+                flag= true;
+            }else {
+                flag= false;
+            }
+        }
+        return flag;
+    }
     //初スタートするとき
     public void Create(string createpos = "upstart") {
-        if ( set.All(flag => flag) ) {
+        if (Match() ) {
             if ( !colliderobject ) {
                 GameObject.Find("UI/play").GetComponent<Button>( ).interactable = false;
                 hoeg = Observable.Timer(TimeSpan.FromSeconds(span) , TimeSpan.FromSeconds(2)).Subscribe(_ => {

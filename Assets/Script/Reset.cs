@@ -4,8 +4,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Reset : MonoBehaviour {
-    public void reset(string resetScene) {
-        SceneManager.LoadScene(resetScene);
+    public void reset() {
+        SceneManager.LoadScene(StageManager.Instance.nowstage.Reset_Scene_Name);
         GameObject.Find("UI/Return").GetComponent<Button>( ).interactable = false;
         CreateButton.moveflag = false;
         var turnDisplay=GameObject.Find("system").GetComponent<turndisplay>( );
@@ -14,5 +14,6 @@ public class Reset : MonoBehaviour {
         if ( Physics.gravity.y > 0 ) {
             Physics.gravity = -Physics.gravity;
         }
+        Physics.gravity = new Vector3(0 , Physics.gravity.y , 0);
     }
 }

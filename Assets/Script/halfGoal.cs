@@ -18,11 +18,11 @@ public class halfGoal : MonoBehaviour {
         var goal = this.OnTriggerEnterAsObservable( )
             .Where(goaltag => goaltag.tag == "rain");
         goal
-            .Buffer(GameObject.Find("system").GetComponent<CreateButton>( ).Limit - 1)
+            .Buffer(4)
             .FirstOrDefault( )
             .Subscribe(_ => {
                 @return.interactable = true; //反転できるように
-            });
+            }).AddTo(this.gameObject);
     }
 
    

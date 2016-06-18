@@ -30,7 +30,7 @@ public class SetRotation : MonoBehaviour {
                     if ( obj.tag == "road" ) {
                         getObj = true;
                         if ( Input.GetMouseButtonDown(0) ) {
-                            oldmousepos = new Vector3(Mathf.FloorToInt(Input.mousePosition.x) , Mathf.FloorToInt(Input.mousePosition.y));
+                            oldmousepos = RoundPos(Input.mousePosition);
                         }
 
                     } else {
@@ -51,9 +51,9 @@ public class SetRotation : MonoBehaviour {
             //マウスクリックされたら3秒後にOnNextを流す
             .SelectMany(_ => Observable.Timer(TimeSpan.FromSeconds(longTap)))
             .Where(_ => getObj)//オブジェクトを取得
-            .DistinctUntilChanged( )
-            .ThrottleFrame(10)
             .Where(_ => CheckMove(Input.mousePosition))
+            .DistinctUntilChanged( )
+            .ThrottleFrame(5)
              //途中でMouseUpされたらストリームをリセット
              .TakeUntil(mouseUpStream)
             //マウスの座標が変わってたらストリームをリセット
@@ -87,12 +87,15 @@ public class SetRotation : MonoBehaviour {
             .TakeUntil(this.UpdateAsObservable( ).Where(_ => Input.GetMouseButtonUp(0)))
             .Subscribe(_ => {
                 var hoge2 = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                var result = hoge2.y - rotatePos;
+                var hoge1 = transform.InverseTransformPoint(hoge2);
+                var y = hoge2.y - rotateObj.transform.position.y;
+                //   var x= hoge2.x - rotateObj.transform.position.x;
                 if ( rotateObj.transform.localPosition.x - hoge2.x > 0 ) {
-                    result = -result;
                 } else {
+                    y = -y;
                 }
-                rotateObj.transform.Rotate(new Vector3(0 , 0 , result) , Space.World);
+
+                rotateObj.transform.Rotate(new Vector3(y , 0 , 0));
 
             });
 
@@ -110,7 +113,7 @@ public class SetRotation : MonoBehaviour {
     }
     //指の座標が動いたか否かの判定
     bool CheckMove(Vector3 newmousepos) {
-        newmousepos= new Vector3(Mathf.FloorToInt(newmousepos.x) , Mathf.FloorToInt(newmousepos.y));
+        newmousepos=RoundPos(newmousepos);
         if ( oldmousepos == newmousepos ) {
             return true;
         } else {
@@ -122,9 +125,17 @@ public class SetRotation : MonoBehaviour {
     //触れたオブジェクトを返す
     GameObject DecisionObj() {
         RaycastHit hit;
-        Ray ray = GetComponent<Camera>( ).ScreenPointToRay(Input.mousePosition);
+        Ray ray = GameObject.Find("Main Camera").GetComponent<Camera>( ).ScreenPointToRay(Input.mousePosition);
         Physics.Raycast(ray , out hit , mask.value);
         return hit.collider.gameObject;
+    }
+
+    //1の桁を丸める
+    Vector3 RoundPos(Vector3 pos) {
+        pos.x = Mathf.Round(pos.x / 10);
+        pos.y = Mathf.Round(pos.y / 10);
+
+      return  new Vector3(pos.x * 10 , pos.y * 10 , 0);
     }
 
 }

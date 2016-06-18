@@ -6,18 +6,19 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class InstanceObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
-    public GameObject insobj;
+    private GameObject insobj;
     private GameObject createobj;
     public int setnum;
     void Start() {
-
+        var manager = StageManager.Instance.nowstage.setitem[setnum-1].obj;
+        insobj = manager;
     }
 
     public void OnBeginDrag(PointerEventData obj) {
         createobj = Instantiate(insobj , fromScreenPostoWorldPos(obj) , insobj.transform.rotation) as GameObject;
         createobj.name = this.gameObject.name;
         createobj.GetComponent<BoxCollider>( ).isTrigger = true;
-        GameObject.Find("system").GetComponent<CreateButton>( ).set[setnum - 1] = true;
+        StageManager.Instance.nowstage.setitem[setnum-1].SET_ITEM_FLAG = true;
     }
     public void OnDrag(PointerEventData obj) {
         createobj.transform.position = fromScreenPostoWorldPos(obj);
