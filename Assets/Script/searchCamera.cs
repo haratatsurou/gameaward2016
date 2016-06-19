@@ -5,7 +5,7 @@ using UnityEngine.UI;
 [ExecuteInEditMode]
 public class searchCamera : MonoBehaviour {
 
-    void OnEnable() {
+    void Awake() {
         var maincamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
         var canvas = this.GetComponent<Canvas>( );
         canvas.worldCamera = maincamera;
