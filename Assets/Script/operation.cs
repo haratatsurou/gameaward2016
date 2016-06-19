@@ -6,22 +6,15 @@ using System.Collections.Generic;
 using UniRx;
 using UniRx.Triggers;
 
-[RequireComponent(typeof(BoxCollider),typeof(sortLayer))]
+[RequireComponent(typeof(Hudcontrol))]
 public class operation : MonoBehaviour{
     private Vector3 screenPoint;
     private Vector3 offset;
     public List<Collider> colliders;
-    
     void OnEnable() {
-        foreach ( Collider collider in GetComponents<Collider>( ) ) {
+        foreach ( Collider collider in GetComponents<BoxCollider>( ) ) {
             colliders.Add(collider);
-            collider.isTrigger = true;
         }
-        this.gameObject.tag = "road";
-       sortLayer layer=this.GetComponent<sortLayer>();
-        layer.LayerName = "Forward";
-        layer.OrderInLayer = 1;
-
 
     }
 
