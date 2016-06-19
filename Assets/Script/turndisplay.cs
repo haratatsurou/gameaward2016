@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-using System;
 
 public class turndisplay : MonoBehaviour {
 
@@ -23,9 +22,7 @@ public class turndisplay : MonoBehaviour {
         CreateStart(create);
     }
     public void Dispose(CreateButton create) {
-        try {
-            create.hoeg.Dispose( );//一回購読停止する
-        } catch ( NullReferenceException ) { }
+        create.hoeg.Dispose( );//一回購読停止する
     }
     public void CreateStart(CreateButton create) {
         create.Create("downstart" , -0.1f);// 再びstart

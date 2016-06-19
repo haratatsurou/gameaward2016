@@ -91,12 +91,11 @@ public class SetRotation : MonoBehaviour {
                 var y = hoge2.y - rotateObj.transform.position.y;
                 //   var x= hoge2.x - rotateObj.transform.position.x;
                 if ( rotateObj.transform.localPosition.x - hoge2.x > 0 ) {
-                    y = -y;
-
                 } else {
+                    y = -y;
                 }
 
-                rotateObj.transform.Rotate(new Vector3(0 , 0 , y),Space.World);
+                rotateObj.transform.Rotate(new Vector3(y , 0 , 0));
 
             });
 
