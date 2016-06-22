@@ -80,7 +80,6 @@ public class CreateButton : MonoBehaviour {
                 
                 foreach ( GameObject obj in objs ) {
                     obj.GetComponent<operation>( ).colliders[1].isTrigger = false;
-                    print(obj);
                 }
             } else {
                 GameObject.Find("dialog").GetComponent<dialog>( ).display("オブジェクトが接触しているよ");
