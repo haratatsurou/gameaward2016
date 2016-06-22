@@ -43,7 +43,7 @@ public class CreateButton : MonoBehaviour {
         //一定間隔で水玉を出す
         hoeg = Observable.Timer(TimeSpan.FromSeconds(span) , TimeSpan.FromSeconds(2)).Subscribe(_ => {
             var createPos = GameObject.Find(createpos).transform;
-            Vector3 inspos = new Vector3(createPos.position.x , createPos.position.y - insposY , createPos.position.z);
+            Vector3 inspos = new Vector3(createPos.position.x , createPos.position.y - insposY , 0);
             Instantiate(RainDrop , inspos , Quaternion.identity);
             i++;
         });
@@ -69,7 +69,7 @@ public class CreateButton : MonoBehaviour {
                 GameObject.Find("UI/play").GetComponent<Button>( ).interactable = false;
                 hoeg = Observable.Timer(TimeSpan.FromSeconds(span) , TimeSpan.FromSeconds(2)).Subscribe(_ => {
                     var createPos = GameObject.Find(createpos).transform;
-                    Vector3 inspos = new Vector3(createPos.position.x , createPos.position.y - 0.1f , createPos.position.z);
+                    Vector3 inspos = new Vector3(createPos.position.x , createPos.position.y - 0.1f , 0);
                     Instantiate(RainDrop , inspos , Quaternion.identity);
                    
                     moveflag = true;
@@ -77,8 +77,10 @@ public class CreateButton : MonoBehaviour {
                     i++;
                 });
                 GameObject[] objs = GameObject.FindGameObjectsWithTag("road");
+                
                 foreach ( GameObject obj in objs ) {
                     obj.GetComponent<operation>( ).colliders[1].isTrigger = false;
+                    print(obj);
                 }
             } else {
                 GameObject.Find("dialog").GetComponent<dialog>( ).display("オブジェクトが接触しているよ");

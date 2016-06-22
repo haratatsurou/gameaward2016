@@ -11,7 +11,7 @@ public class operation : MonoBehaviour {
     private Vector3 screenPoint;
     private Vector3 offset;
     public List<Collider> colliders;
-    void OnEnable() {
+    void Awake() {
         foreach ( Collider collider in GetComponents<Collider>( ) ) {
             colliders.Add(collider);
             collider.isTrigger = true;
