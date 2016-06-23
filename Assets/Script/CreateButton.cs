@@ -10,7 +10,7 @@ public class CreateButton : MonoBehaviour {
     public static bool moveflag = false;
     public static bool colliderobject = false;
     private GameObject RainDrop;
-    public int span;
+    private int span;
     public IDisposable hoeg;
     [HideInInspector]
     public int i;

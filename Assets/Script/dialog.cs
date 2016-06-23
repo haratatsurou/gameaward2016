@@ -32,6 +32,6 @@ public class dialog : MonoBehaviour, function {
         CreateButton.moveflag = false;
         this.GetComponent<Canvas>( ).enabled = false;
         GameObject.Find("UI").GetComponent<GraphicRaycaster>( ).enabled = true;
-        Time.timeScale = StageManager.Instance.worldTime;
+        Time.timeScale = StageManager.Instance.worldTime ;
     }
 }

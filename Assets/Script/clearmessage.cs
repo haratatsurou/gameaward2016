@@ -2,21 +2,27 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
+[System.Serializable]
+public class savedate {
+    
+}
 public class clearmessage : dialog {
     private Text texts;
 
     void Start() {
         texts = GameObject.Find("clear/message").GetComponent<Text>( );
         this.GetComponent<Canvas>( ).enabled = false;
-#if UNITY_EDITOR
-        //PlayerPrefs.DeleteAll( );
-#endif
+
+
+        print(SaveManager.Instance.saveinfo[StageManager.Instance.nowstage.Reset_Scene_Name].getstar);
     }
+    //クリアしたときの情報を載せる
     public new void displaytext(string contents) {
         this.GetComponent<Canvas>( ).enabled = true;
         texts.text = contents;
-
+        StageManager.Instance.ClearInfo( );
     }
     public void reset() {
         SceneManager.LoadScene(StageManager.Instance.nowstage.Reset_Scene_Name);
