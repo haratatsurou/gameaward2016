@@ -23,6 +23,7 @@ public class CreateButton : MonoBehaviour {
         manager = StageManager.Instance.nowstage;
         Limit = manager.Limit;
         RainDrop = manager.Rain;
+        span = manager.span;
     }
     void Start() {
         Migration( );
@@ -67,7 +68,7 @@ public class CreateButton : MonoBehaviour {
         if (Match() ) {
             if ( !colliderobject ) {
                 GameObject.Find("UI/play").GetComponent<Button>( ).interactable = false;
-                hoeg = Observable.Timer(TimeSpan.FromSeconds(span) , TimeSpan.FromSeconds(2)).Subscribe(_ => {
+                hoeg = Observable.Timer(TimeSpan.FromSeconds(span) , TimeSpan.FromSeconds(span)).Subscribe(_ => {
                     var createPos = GameObject.Find(createpos).transform;
                     Vector3 inspos = new Vector3(createPos.position.x , createPos.position.y - 0.1f , 0);
                     Instantiate(RainDrop , inspos , Quaternion.identity);

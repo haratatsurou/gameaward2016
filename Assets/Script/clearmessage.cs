@@ -2,17 +2,21 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+
 public class clearmessage : dialog {
     private Text texts;
 
     void Start() {
         texts = GameObject.Find("clear/message").GetComponent<Text>( );
         this.GetComponent<Canvas>( ).enabled = false;
-        Time.timeScale = 1;
+#if UNITY_EDITOR
+        //PlayerPrefs.DeleteAll( );
+#endif
     }
     public new void displaytext(string contents) {
         this.GetComponent<Canvas>( ).enabled = true;
         texts.text = contents;
+
     }
     public void reset() {
         SceneManager.LoadScene(StageManager.Instance.nowstage.Reset_Scene_Name);

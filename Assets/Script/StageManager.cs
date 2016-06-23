@@ -13,12 +13,16 @@ public struct StageInfo {
     public setItem[] setitem;
     [Header("生成する雫")]
     public GameObject Rain;
-    [Header("オブジェクトが出てくる感覚")]
+    [Header("オブジェクトが出てくる感覚(個/sec)")]
     public int span;
     [Header("作り出す雫の数")]
     public int Limit;
     [Header("ゴールの条件(雫の個数)")]
     public int UnLimit;
+    [Header("ゴールしたか")]
+    public bool Clear;
+    [Header("取得した星の数")]
+    public int GetStar;
 
 }
 [System.Serializable]
@@ -34,8 +38,11 @@ public class StageManager : SingletonMonoBehaviour<StageManager> {
     [HideInInspector]
     public StageInfo nowstage;
 
+    public float worldTime;
+
     void Awake() {
         nowstage = stageinfo[NowtheStage( )];
+        Time.timeScale = worldTime;
     }
     public int NowtheStage() {
         Regex rex = new Regex(@"[^0-9]");

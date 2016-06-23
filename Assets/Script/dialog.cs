@@ -15,7 +15,6 @@ public class dialog : MonoBehaviour, function {
     void Start() {
         text = GameObject.Find("dialog/message").GetComponent<Text>( );
         this.GetComponent<Canvas>( ).enabled = false;
-        Time.timeScale = 1;
 
     }
     //dialogを表示する
@@ -33,6 +32,6 @@ public class dialog : MonoBehaviour, function {
         CreateButton.moveflag = false;
         this.GetComponent<Canvas>( ).enabled = false;
         GameObject.Find("UI").GetComponent<GraphicRaycaster>( ).enabled = true;
-        Time.timeScale = 1;
+        Time.timeScale = StageManager.Instance.worldTime;
     }
 }

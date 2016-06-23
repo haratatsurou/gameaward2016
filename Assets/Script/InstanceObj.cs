@@ -4,14 +4,21 @@ using UniRx;
 using UniRx.Triggers;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
 
 public class InstanceObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
     private GameObject insobj;
     private GameObject createobj;
     public int setnum;
     void Start() {
-        var manager = StageManager.Instance.nowstage.setitem[setnum-1].obj;
-        insobj = manager;
+        try {
+            var manager = StageManager.Instance.nowstage.setitem[setnum - 1].obj;
+            insobj = manager;
+        } catch ( IndexOutOfRangeException ) {
+            GetComponent<Image>( ).enabled = false;
+            GetComponent<InstanceObj>( ).enabled = false;
+        }
+ 
     }
 
     public void OnBeginDrag(PointerEventData obj) {
@@ -33,7 +40,6 @@ public class InstanceObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         RectTransformUtility.ScreenPointToWorldPointInRectangle(GetComponent<RectTransform>( ) , ped.position , Camera.main , out localpos);
         Vector2 hoge = localpos;
         return hoge;
-
     }
 
 }

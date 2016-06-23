@@ -8,16 +8,20 @@ using UnityEngine.SceneManagement;
 
 public class SetRotation : MonoBehaviour {
     public LayerMask mask;
-    [SerializeField, Range(0.2f , 2f), Header("長押しした時間")]
+    [ Header("長押しした時間")]
     public float longTap;
     float rotatePos = 0;
     private Vector3? oldmousepos;
     void Awake() {
+
         LongTap( );
         SceneManager.LoadScene("SetUI" , LoadSceneMode.Additive);
     }
-    void Start() { }
-
+    void Start() {
+        longTap = longTap * StageManager.Instance.worldTime;
+    }
+    void Update() {
+    }
     public void LongTap() {
         GameObject obj = null;
         var getObj = false;
@@ -48,12 +52,12 @@ public class SetRotation : MonoBehaviour {
         var mouseUpStream = this.UpdateAsObservable( ).Where(_ => Input.GetMouseButtonUp(0));
 
         mouseDownStream
-            //マウスクリックされたら3秒後にOnNextを流す
+            //マウスクリックされたらlongTap秒後にOnNextを流す
             .SelectMany(_ => Observable.Timer(TimeSpan.FromSeconds(longTap)))
             .Where(_ => getObj)//オブジェクトを取得
             .Where(_ => CheckMove(Input.mousePosition))
             .DistinctUntilChanged( )
-            .ThrottleFrame(5)
+            .ThrottleFrame(10)
              //途中でMouseUpされたらストリームをリセット
              .TakeUntil(mouseUpStream)
             //マウスの座標が変わってたらストリームをリセット
