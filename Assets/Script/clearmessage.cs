@@ -4,32 +4,34 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
 
-[System.Serializable]
-public class savedate {
-    
-}
+
 public class clearmessage : dialog {
     private Text texts;
+    public Sprite starSprite;
+    private GameObject[] star=new GameObject[2];
 
     void Start() {
         texts = GameObject.Find("clear/message").GetComponent<Text>( );
         this.GetComponent<Canvas>( ).enabled = false;
-
-
-        print(SaveManager.Instance.saveinfo[StageManager.Instance.nowstage.Reset_Scene_Name].getstar);
+        star = GameObject.FindGameObjectsWithTag("UIstar");
     }
     //クリアしたときの情報を載せる
     public new void displaytext(string contents) {
         this.GetComponent<Canvas>( ).enabled = true;
         texts.text = contents;
         StageManager.Instance.ClearInfo( );
+        print(StageManager.Instance.nowstage.GetStar);
+        //取得したスターを表示-------------------------------
+        for(int i=0 ;i<StageManager.Instance.nowstage.GetStar ;i++ ) {
+            star[i].GetComponent<Image>( ).sprite = starSprite; //後ろから取り出す
+        }
     }
     public void reset() {
         SceneManager.LoadScene(StageManager.Instance.nowstage.Reset_Scene_Name);
+        StageManager.Instance.nowstage.GetStar = 0;
         loadscene( );
     }
     public void loadscene() {
-        SceneManager.LoadScene(StageManager.Instance.nowstage.Reset_Scene_Name);
         GameObject.Find("clear").GetComponent<GraphicRaycaster>( ).enabled = false;
         CreateButton.moveflag = false;
         GameObject.Find("upgoal").GetComponent<Goal>( ).enabled = false;

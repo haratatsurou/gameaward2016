@@ -27,6 +27,7 @@ public struct StageInfo {
 [System.Serializable]
 public struct setItem {
     public GameObject obj;
+    public Sprite objImage;
     public bool SET_ITEM_FLAG;
 
 }

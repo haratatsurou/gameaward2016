@@ -42,9 +42,9 @@ public class CreateButton : MonoBehaviour {
     public void Create(string createpos = "upstart" , float insposY = 0.1f) {
         i = 0;
         //一定間隔で水玉を出す
-        hoeg = Observable.Timer(TimeSpan.FromSeconds(span) , TimeSpan.FromSeconds(2)).Subscribe(_ => {
+        hoeg = Observable.Timer(TimeSpan.FromSeconds(span) , TimeSpan.FromSeconds(span)).Subscribe(_ => {
             var createPos = GameObject.Find(createpos).transform;
-            Vector3 inspos = new Vector3(createPos.position.x , createPos.position.y - insposY , 0);
+            Vector3 inspos = new Vector3(createPos.position.x , createPos.position.y -insposY , 0);
             Instantiate(RainDrop , inspos , Quaternion.identity);
             i++;
         });

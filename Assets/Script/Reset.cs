@@ -15,5 +15,6 @@ public class Reset : MonoBehaviour {
             Physics.gravity = -Physics.gravity;
         }
         Physics.gravity = new Vector3(0 , Physics.gravity.y , 0);
+        StageManager.Instance.nowstage.GetStar = 0;
     }
 }
