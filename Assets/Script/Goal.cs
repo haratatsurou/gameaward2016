@@ -6,13 +6,13 @@ using UniRx.Triggers;
 
 //くそコード
 public class Goal : MonoBehaviour {
-    public GameObject RainDrop;
+    private GameObject RainDrop;
     private Text count;
     private Button @return;
     void Start() {
         //CountGoal();
-        GoalRain( );
         @return = GameObject.Find("UI/Return").GetComponent<Button>( ); //リターンカウント
+        RainDrop = StageManager.Instance.nowstage.Rain;
 
     }
     void CountGoal() {
@@ -23,21 +23,21 @@ public class Goal : MonoBehaviour {
             .FirstOrDefault( )
             .Subscribe(_ => {
                 StageClear( );
-            });
+            }).AddTo(this.gameObject);
     }
     void StageClear() {
 
         GameObject.Find("clear").GetComponent<clearmessage>( ).displaytext("ステージクリアー");
     }
    
-    void GoalRain()
+   public void GoalRain()
     {
         var goal = this.OnTriggerEnterAsObservable()
             .Where(goaltag => goaltag.tag == "rain")
             .Subscribe(goaltag => {
                 StartCoroutine("destroyobj",goaltag.gameObject);
                 CountGoal( );
-            });
+            }).AddTo(this.gameObject);
     }
 
     IEnumerator destroyobj(GameObject destroy) {

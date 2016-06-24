@@ -5,23 +5,27 @@ using UnityEngine.UI;
 using UniRx.Triggers;
 
 public class halfGoal : MonoBehaviour {
-    public GameObject RainDrop;
+    private GameObject RainDrop;
     private Text count;
     private Button @return;
+
+    private Goal goalobj;
     void Start() {
         //CountGoal();
         GoalRain( );
         @return = GameObject.Find("UI/Return").GetComponent<Button>( ); //リターンカウント
-
+        RainDrop = StageManager.Instance.nowstage.Rain;
+        goalobj = GameObject.Find("upgoal").GetComponent<Goal>( );
     }
     void CountGoal() {
         var goal = this.OnTriggerEnterAsObservable( )
             .Where(goaltag => goaltag.tag == "rain");
         goal
-            .Buffer(4)
+            .Buffer(StageManager.Instance.nowstage.UnLimit - 1)
             .FirstOrDefault( )
             .Subscribe(_ => {
                 @return.interactable = true; //反転できるように
+                goalobj.GoalRain( );
             }).AddTo(this.gameObject);
     }
 
@@ -68,7 +72,8 @@ public class halfGoal : MonoBehaviour {
         dummy.tag = "otherrain";
         var rigidbody = dummy.GetComponent<Rigidbody>( );
         float random = Random.Range(-17f , 7f);
-        rigidbody.AddForce(random*10 , 0 , 0 , ForceMode.Force);
+        rigidbody.AddForce(random , 0 , 0);
+        dummy.GetComponent<SphereCollider>( ).radius =0.1f;
         rigidbody.mass = 0.1f;
     }
 }

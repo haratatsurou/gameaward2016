@@ -10,7 +10,7 @@ public class CreateButton : MonoBehaviour {
     public static bool moveflag = false;
     public static bool colliderobject = false;
     private GameObject RainDrop;
-    public int span;
+    private int span;
     public IDisposable hoeg;
     [HideInInspector]
     public int i;
@@ -23,6 +23,7 @@ public class CreateButton : MonoBehaviour {
         manager = StageManager.Instance.nowstage;
         Limit = manager.Limit;
         RainDrop = manager.Rain;
+        span = manager.span;
     }
     void Start() {
         Migration( );
@@ -41,9 +42,9 @@ public class CreateButton : MonoBehaviour {
     public void Create(string createpos = "upstart" , float insposY = 0.1f) {
         i = 0;
         //一定間隔で水玉を出す
-        hoeg = Observable.Timer(TimeSpan.FromSeconds(span) , TimeSpan.FromSeconds(2)).Subscribe(_ => {
+        hoeg = Observable.Timer(TimeSpan.FromSeconds(span) , TimeSpan.FromSeconds(span)).Subscribe(_ => {
             var createPos = GameObject.Find(createpos).transform;
-            Vector3 inspos = new Vector3(createPos.position.x , createPos.position.y - insposY , 0);
+            Vector3 inspos = new Vector3(createPos.position.x , createPos.position.y -insposY , 0);
             Instantiate(RainDrop , inspos , Quaternion.identity);
             i++;
         });
@@ -67,7 +68,7 @@ public class CreateButton : MonoBehaviour {
         if (Match() ) {
             if ( !colliderobject ) {
                 GameObject.Find("UI/play").GetComponent<Button>( ).interactable = false;
-                hoeg = Observable.Timer(TimeSpan.FromSeconds(span) , TimeSpan.FromSeconds(2)).Subscribe(_ => {
+                hoeg = Observable.Timer(TimeSpan.FromSeconds(span) , TimeSpan.FromSeconds(span)).Subscribe(_ => {
                     var createPos = GameObject.Find(createpos).transform;
                     Vector3 inspos = new Vector3(createPos.position.x , createPos.position.y - 0.1f , 0);
                     Instantiate(RainDrop , inspos , Quaternion.identity);
@@ -80,7 +81,6 @@ public class CreateButton : MonoBehaviour {
                 
                 foreach ( GameObject obj in objs ) {
                     obj.GetComponent<operation>( ).colliders[1].isTrigger = false;
-                    print(obj);
                 }
             } else {
                 GameObject.Find("dialog").GetComponent<dialog>( ).display("オブジェクトが接触しているよ");
