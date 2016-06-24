@@ -38,11 +38,13 @@ public class CreateButton : MonoBehaviour {
 
             });
     }
-
+    void Update() {
+    }
+    //帰り道用
     public void Create(string createpos = "upstart" , float insposY = 0.1f) {
         i = 0;
         //一定間隔で水玉を出す
-        hoeg = Observable.Timer(TimeSpan.FromSeconds(span) , TimeSpan.FromSeconds(span)).Subscribe(_ => {
+        hoeg = Observable.Timer(TimeSpan.FromSeconds(span) , TimeSpan.FromSeconds(span)).Where(_ => GameObject.Find("downgoal").GetComponent<halfGoal>().count - 1 < i).Subscribe(_ => {
             var createPos = GameObject.Find(createpos).transform;
             Vector3 inspos = new Vector3(createPos.position.x , createPos.position.y -insposY , 0);
             Instantiate(RainDrop , inspos , Quaternion.identity);
@@ -63,8 +65,14 @@ public class CreateButton : MonoBehaviour {
         }
         return flag;
     }
+    public void ResetMatch() {
+        for ( int i = 0 ; i < manager.setitem.Length ; i++ ) {
+            manager.setitem[i].SET_ITEM_FLAG = false;
+        }
+    }
     //初スタートするとき
     public void Create(string createpos = "upstart") {
+        i = 0;
         if (Match() ) {
             if ( !colliderobject ) {
                 GameObject.Find("UI/play").GetComponent<Button>( ).interactable = false;
