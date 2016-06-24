@@ -29,6 +29,7 @@ public class clearmessage : dialog {
     public void reset() {
         SceneManager.LoadScene(StageManager.Instance.nowstage.Reset_Scene_Name);
         StageManager.Instance.nowstage.GetStar = 0;
+        GameObject.Find("system").GetComponent<CreateButton>( ).ResetMatch( );
         loadscene( );
     }
     public void loadscene() {

@@ -6,7 +6,7 @@ using UniRx.Triggers;
 
 public class halfGoal : MonoBehaviour {
     private GameObject RainDrop;
-    private Text count;
+    public int count;
     private Button @return;
 
     private Goal goalobj;
@@ -32,11 +32,15 @@ public class halfGoal : MonoBehaviour {
    
     void GoalRain()
     {
+        count = 0;
+
         var goal = this.OnTriggerEnterAsObservable()
             .Where(goaltag => goaltag.tag == "rain")
             .Subscribe(goaltag => {
                 StartCoroutine("destroyobj",goaltag.gameObject);
                 CountGoal( );
+                count++;
+                print(count);
             });
     }
 

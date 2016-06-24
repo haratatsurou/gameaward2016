@@ -16,5 +16,7 @@ public class Reset : MonoBehaviour {
         }
         Physics.gravity = new Vector3(0 , Physics.gravity.y , 0);
         StageManager.Instance.nowstage.GetStar = 0;
+        //設置フラグをすべてリセット
+        this.GetComponent<CreateButton>( ).ResetMatch( );
     }
 }
