@@ -16,6 +16,7 @@ public class turndisplay : MonoBehaviour {
         GameObject.Find("UI/reset").GetComponent<Button>( ).interactable = false;
         DestroyRain( );
         this.GetComponent<acceleration>( ).i = -1f;
+        GameObject.Find("upgoal").GetComponent<Goal>( ).GoalRain( );
     }
     void hoge() {
 
@@ -48,7 +49,7 @@ public class turndisplay : MonoBehaviour {
         }
     }
     public void CreateStart(CreateButton create) {
-        create.Create("downstart" , -0.1f);// 再びstart
+        create.Create("downstart" , -0.5f);// 再びstart
     }
 
 }

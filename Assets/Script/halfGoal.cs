@@ -25,7 +25,6 @@ public class halfGoal : MonoBehaviour {
             .FirstOrDefault( )
             .Subscribe(_ => {
                 @return.interactable = true; //反転できるように
-                goalobj.GoalRain( );
             }).AddTo(this.gameObject);
     }
 
@@ -40,7 +39,6 @@ public class halfGoal : MonoBehaviour {
                 StartCoroutine("destroyobj",goaltag.gameObject);
                 CountGoal( );
                 count++;
-                print(count);
             });
     }
 

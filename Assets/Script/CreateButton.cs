@@ -28,6 +28,9 @@ public class CreateButton : MonoBehaviour {
     void Start() {
         Migration( );
         returnbutton = GameObject.Find("UI/Return").GetComponent<Button>( );
+        endINS( );
+    }
+    void endINS() {
         var endins = this.UpdateAsObservable( )
             .Where(_ => Limit - 1 < i);//制限に達したら水玉を出すのをやメル
         endins
@@ -43,8 +46,11 @@ public class CreateButton : MonoBehaviour {
     //帰り道用
     public void Create(string createpos = "upstart" , float insposY = 0.1f) {
         i = 0;
+        var intohalfGoal = GameObject.Find("downgoal").GetComponent<halfGoal>( ).count;
+        Limit = intohalfGoal;
+        endINS( );
         //一定間隔で水玉を出す
-        hoeg = Observable.Timer(TimeSpan.FromSeconds(span) , TimeSpan.FromSeconds(span)).Where(_ => GameObject.Find("downgoal").GetComponent<halfGoal>().count - 1 < i).Subscribe(_ => {
+        hoeg = Observable.Timer(TimeSpan.FromSeconds(span) , TimeSpan.FromSeconds(span)).Subscribe(_ => {
             var createPos = GameObject.Find(createpos).transform;
             Vector3 inspos = new Vector3(createPos.position.x , createPos.position.y -insposY , 0);
             Instantiate(RainDrop , inspos , Quaternion.identity);
