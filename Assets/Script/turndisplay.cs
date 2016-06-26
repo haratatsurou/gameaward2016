@@ -5,12 +5,15 @@ using System;
 
 public class turndisplay : MonoBehaviour {
 
-    void Start() {
+    void OnEnable() {
         GameObject.Find("Main Camera").GetComponent<Animator>( ).enabled = false;
+    }
+    void Start() {
+        ChangeG( );
     }
     public void ChangeG() {
 
-        Invoke("hoge" , 3f);
+        Invoke("hoge" , 2.5f);
         GameObject.Find("Main Camera").GetComponent<Animator>( ).enabled = true;
         //GameObject.Find("Main Camera").GetComponent<Transform>( ).Rotate(new Vector3(0 , 0 , 180f));
         GameObject.Find("UI/Top/reset").GetComponent<Button>( ).interactable = false;
