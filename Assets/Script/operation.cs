@@ -17,9 +17,7 @@ public class operation : MonoBehaviour {
             collider.isTrigger = true;
         }
         this.gameObject.tag = "road";
-
     }
-
     void OnMouseDown() {
         if ( !CreateButton.moveflag ) {
             this.screenPoint = Camera.main.WorldToScreenPoint(transform.position);

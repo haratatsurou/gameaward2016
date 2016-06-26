@@ -5,7 +5,7 @@ using System;
 public class getstar : MonoBehaviour {
     void OnTriggerEnter(Collider rain) {
         if ( rain.tag == "rain" ) {
-            Destroy(this.gameObject);
+            Destroy(this.gameObject,0.5f);
         }
     }
     void OnDestroy() {

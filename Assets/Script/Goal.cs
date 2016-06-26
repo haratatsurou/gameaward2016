@@ -11,7 +11,7 @@ public class Goal : MonoBehaviour {
     private Button @return;
     void Start() {
         //CountGoal();
-        @return = GameObject.Find("UI/Return").GetComponent<Button>( ); //リターンカウント
+        @return = GameObject.Find("UI/Top/Return").GetComponent<Button>( ); //リターンカウント
         RainDrop = StageManager.Instance.nowstage.Rain;
 
     }

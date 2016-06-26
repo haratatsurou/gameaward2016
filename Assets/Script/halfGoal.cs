@@ -13,7 +13,7 @@ public class halfGoal : MonoBehaviour {
     void Start() {
         //CountGoal();
         GoalRain( );
-        @return = GameObject.Find("UI/Return").GetComponent<Button>( ); //リターンカウント
+        @return = GameObject.Find("UI/Top/Return").GetComponent<Button>( ); //リターンカウント
         RainDrop = StageManager.Instance.nowstage.Rain;
         goalobj = GameObject.Find("upgoal").GetComponent<Goal>( );
     }
@@ -27,8 +27,6 @@ public class halfGoal : MonoBehaviour {
                 @return.interactable = true; //反転できるように
             }).AddTo(this.gameObject);
     }
-
-   
     void GoalRain()
     {
         count = 0;

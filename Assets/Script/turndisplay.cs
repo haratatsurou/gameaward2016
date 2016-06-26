@@ -10,10 +10,10 @@ public class turndisplay : MonoBehaviour {
     }
     public void ChangeG() {
 
-        Invoke("hoge" , 2.5f);
+        Invoke("hoge" , 3f);
         GameObject.Find("Main Camera").GetComponent<Animator>( ).enabled = true;
         //GameObject.Find("Main Camera").GetComponent<Transform>( ).Rotate(new Vector3(0 , 0 , 180f));
-        GameObject.Find("UI/reset").GetComponent<Button>( ).interactable = false;
+        GameObject.Find("UI/Top/reset").GetComponent<Button>( ).interactable = false;
         DestroyRain( );
         this.GetComponent<acceleration>( ).i = -1f;
         GameObject.Find("upgoal").GetComponent<Goal>( ).GoalRain( );
@@ -28,8 +28,8 @@ public class turndisplay : MonoBehaviour {
         var topblock = GameObject.Find("topblock").GetComponent<HingeJoint>( );
         topblock.axis= new Vector3(0 , 0 , -90f);
         //-------------------------------------------------------------------------------------------------
-        GameObject.Find("UI/Return").GetComponent<Button>( ).interactable = false;
-        GameObject.Find("UI/reset").GetComponent<Button>( ).interactable = true;
+        GameObject.Find("UI/Top/play").GetComponent<Button>( ).interactable = false;
+        GameObject.Find("UI/Top/reset").GetComponent<Button>( ).interactable = true;
         var create = this.GetComponent<CreateButton>( );
         Dispose(create);
         CreateStart(create);
@@ -47,7 +47,7 @@ public class turndisplay : MonoBehaviour {
         }
     }
     public void CreateStart(CreateButton create) {
-        create.Create("downstart" , -0.5f);// 再びstart
+        create.Create( -0.5f, "downstart" );// 再びstart
     }
 
 }

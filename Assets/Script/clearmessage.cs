@@ -20,7 +20,6 @@ public class clearmessage : dialog {
         this.GetComponent<Canvas>( ).enabled = true;
         texts.text = contents;
         StageManager.Instance.ClearInfo( );
-        print(StageManager.Instance.nowstage.GetStar);
         //取得したスターを表示-------------------------------
         for(int i=0 ;i<StageManager.Instance.nowstage.GetStar ;i++ ) {
             star[i].GetComponent<Image>( ).sprite = starSprite; //後ろから取り出す

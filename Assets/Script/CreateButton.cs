@@ -15,7 +15,7 @@ public class CreateButton : MonoBehaviour {
     [HideInInspector]
     public int i;
     private int Limit;
-    private Button returnbutton;
+  //  private Button returnbutton;
 
     StageInfo manager;
     //private bool[] set;
@@ -27,7 +27,7 @@ public class CreateButton : MonoBehaviour {
     }
     void Start() {
         Migration( );
-        returnbutton = GameObject.Find("UI/Return").GetComponent<Button>( );
+        //returnbutton = GameObject.Find("UI/Top/Return").GetComponent<Button>( );
         endINS( );
     }
     void endINS() {
@@ -36,15 +36,16 @@ public class CreateButton : MonoBehaviour {
         endins
             .Subscribe(_ => {
                 hoeg.Dispose( );
+                this.GetComponent<startTOreturn>( ).Start_Return( ); //ボタンを変更する
+                GameObject.Find("UI/Top/play").GetComponent<Button>( ).interactable = true;
                 ////反転ボタンを押せるように
                 //returnbutton.interactable = true;
 
             });
     }
-    void Update() {
-    }
     //帰り道用
-    public void Create(string createpos = "upstart" , float insposY = 0.1f) {
+    public void Create(float insposY=0.1f,string createpos = "upstart") {
+
         i = 0;
         var intohalfGoal = GameObject.Find("downgoal").GetComponent<halfGoal>( ).count;
         Limit = intohalfGoal;
@@ -81,7 +82,7 @@ public class CreateButton : MonoBehaviour {
         i = 0;
         if (Match() ) {
             if ( !colliderobject ) {
-                GameObject.Find("UI/play").GetComponent<Button>( ).interactable = false;
+                GameObject.Find("UI/Top/play").GetComponent<Button>( ).interactable = false;
                 hoeg = Observable.Timer(TimeSpan.FromSeconds(span) , TimeSpan.FromSeconds(span)).Subscribe(_ => {
                     var createPos = GameObject.Find(createpos).transform;
                     Vector3 inspos = new Vector3(createPos.position.x , createPos.position.y - 0.1f , 0);

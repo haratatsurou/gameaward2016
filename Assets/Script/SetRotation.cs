@@ -30,7 +30,7 @@ public class SetRotation : MonoBehaviour {
             .Where(_ => Input.GetMouseButton(0))
             .Subscribe(_ => {
                 try {
-                    obj = DecisionObj( );
+                    obj = DecisionObj();
                     if ( obj.tag == "road" ) {
                         getObj = true;
                         if ( Input.GetMouseButtonDown(0) ) {
@@ -126,7 +126,7 @@ public class SetRotation : MonoBehaviour {
     }
 
     //触れたオブジェクトを返す
-    GameObject DecisionObj() {
+  public  GameObject DecisionObj() {
         RaycastHit hit;
         Ray ray = GameObject.Find("Main Camera").GetComponent<Camera>( ).ScreenPointToRay(Input.mousePosition);
         Physics.Raycast(ray , out hit , mask.value);

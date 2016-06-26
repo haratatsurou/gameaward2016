@@ -22,7 +22,6 @@ public struct StageInfo {
     public int UnLimit;
     [Header("取得した星の数")]
     public int GetStar;
-
 }
 [System.Serializable]
 public struct setItem {
