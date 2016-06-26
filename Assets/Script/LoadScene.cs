@@ -8,5 +8,6 @@ public class LoadScene : MonoBehaviour {
        var  button=GameObject.Find("Canvas/" + loadnum).GetComponent<Button>( );
         button.enabled = false;
         FadeManager.Instance.LoadLevel("Stage"+loadnum.ToString(),loadtime);
+        this.GetComponent<GraphicRaycaster>( ).enabled = false;
     }
 }

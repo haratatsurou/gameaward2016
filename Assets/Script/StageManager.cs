@@ -40,7 +40,7 @@ public class StageManager : SingletonMonoBehaviour<StageManager> {
     public float worldTime;
     private int oldstar;
     void Awake() {
-        nowstage = stageinfo[NowtheStage( )];
+       // nowstage = stageinfo[NowtheStage( )];
         Time.timeScale = worldTime;
         oldstar = StageManager.Instance.nowstage.GetStar;
     }
