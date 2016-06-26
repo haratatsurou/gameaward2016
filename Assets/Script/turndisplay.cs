@@ -14,7 +14,6 @@ public class turndisplay : MonoBehaviour {
 
         Invoke("hoge" , 2.5f);
         GameObject.Find("Main Camera").GetComponent<Animator>( ).enabled = true;
-        //GameObject.Find("Main Camera").GetComponent<Transform>( ).Rotate(new Vector3(0 , 0 , 180f));
         GameObject.Find("UI/Top/reset").GetComponent<Button>( ).interactable = false;
         DestroyRain( );
         this.GetComponent<acceleration>( ).i = -1f;

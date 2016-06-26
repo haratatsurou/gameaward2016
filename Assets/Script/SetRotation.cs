@@ -12,10 +12,16 @@ public class SetRotation : MonoBehaviour {
     public float longTap;
     float rotatePos = 0;
     private Vector3? oldmousepos;
+
+    private SpriteRenderer selectbak;
     void Awake() {
 
         LongTap( );
         SceneManager.LoadScene("SetUI" , LoadSceneMode.Additive);
+    }
+    void OnEnable() {
+        selectbak = GameObject.Find("selectback").GetComponent<SpriteRenderer>( );
+        selectbak.color = new Color(0 , 0 , 0 , 0);
     }
     void Start() {
         longTap = longTap * StageManager.Instance.worldTime;
@@ -56,8 +62,6 @@ public class SetRotation : MonoBehaviour {
             .SelectMany(_ => Observable.Timer(TimeSpan.FromSeconds(longTap)))
             .Where(_ => getObj)//オブジェクトを取得
             .Where(_ => CheckMove(Input.mousePosition))
-            .DistinctUntilChanged( )
-            .ThrottleFrame(10)
              //途中でMouseUpされたらストリームをリセット
              .TakeUntil(mouseUpStream)
             //マウスの座標が変わってたらストリームをリセット
@@ -84,7 +88,8 @@ public class SetRotation : MonoBehaviour {
         //    .Subscribe(hoge => { print("asdf"); });
     }
     void ModeRotate(GameObject rotateObj) {
-
+        rotateObj.GetComponent<sortLayer>( ).LayerName = "Forward";
+        selectbak.color = new Color(0 , 0 , 0,0.5f);
         var rotate = this.UpdateAsObservable( )
             .Where(_ => Input.GetMouseButton(0));
         rotate
@@ -92,13 +97,13 @@ public class SetRotation : MonoBehaviour {
             .Subscribe(_ => {
                 var hoge2 = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 var hoge1 = transform.InverseTransformPoint(hoge2);
-                var y = hoge2.y - rotateObj.transform.position.y;
+                var y = hoge2.y - rotateObj.transform.localPosition.y;
                 //   var x= hoge2.x - rotateObj.transform.position.x;
                 if ( rotateObj.transform.localPosition.x - hoge2.x > 0 ) {
 
                     y = -y;
-                } 
-                rotateObj.transform.Rotate(new Vector3(0 , 0 , y),Space.World);
+                }
+                rotateObj.transform.Rotate(new Vector3(0 , 0 , y) , Space.World);
 
             });
 
@@ -111,6 +116,9 @@ public class SetRotation : MonoBehaviour {
                 LongTap( );
                 CreateButton.moveflag = false;
                 rotatePos = 0;
+
+                rotateObj.GetComponent<sortLayer>( ).LayerName = "Default";
+                selectbak.color = new Color(0 , 0 , 0 , 0);
             });
 
     }
