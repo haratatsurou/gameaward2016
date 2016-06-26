@@ -36,8 +36,7 @@ public class CreateButton : MonoBehaviour {
         endins
             .Subscribe(_ => {
                 hoeg.Dispose( );
-                this.GetComponent<startTOreturn>( ).Start_Return( ); //ボタンを変更する
-                GameObject.Find("UI/Top/play").GetComponent<Button>( ).interactable = true;
+                //GameObject.Find("UI/Top/play").GetComponent<Button>( ).interactable = true;
                 ////反転ボタンを押せるように
                 //returnbutton.interactable = true;
 

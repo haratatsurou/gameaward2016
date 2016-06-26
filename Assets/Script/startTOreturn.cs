@@ -20,7 +20,6 @@ public class startTOreturn : MonoBehaviour {
         Return_Start( );
     }
     public void Start_Return() {
-
         //見てくれ変更
         changeVisible(returnImage , "反転");
         startbutton.onClick.RemoveAllListeners( );
@@ -29,7 +28,7 @@ public class startTOreturn : MonoBehaviour {
                //ロジック変更
                this.GetComponent<turndisplay>( ).ChangeG( );
 
-            });
+           });
     }
     //リセット用
     public void Return_Start() {

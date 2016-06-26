@@ -26,7 +26,6 @@ public class Goal : MonoBehaviour {
             }).AddTo(this.gameObject);
     }
     void StageClear() {
-
         GameObject.Find("clear").GetComponent<clearmessage>( ).displaytext("ステージクリアー");
     }
    

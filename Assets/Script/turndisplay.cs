@@ -8,8 +8,6 @@ public class turndisplay : MonoBehaviour {
     void OnEnable() {
         GameObject.Find("Main Camera").GetComponent<Animator>( ).enabled = false;
     }
-    void Start() {
-    }
     public void ChangeG() {
 
         Invoke("hoge" , 2.5f);
@@ -20,7 +18,6 @@ public class turndisplay : MonoBehaviour {
         GameObject.Find("upgoal").GetComponent<Goal>( ).GoalRain( );
     }
     void hoge() {
-
         Physics.gravity = -Physics.gravity;
         GameObject.Find("Main Camera").GetComponent<Animator>( ).enabled = false;
         //ジョインとの変更------------------------------------------------------------------------------------
@@ -34,6 +31,7 @@ public class turndisplay : MonoBehaviour {
         var create = this.GetComponent<CreateButton>( );
         Dispose(create);
         CreateStart(create);
+
     }
     void DestroyRain() {
         foreach ( var rain in GameObject.FindGameObjectsWithTag("rain") ) {

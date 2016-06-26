@@ -23,13 +23,12 @@ public class acceleration : MonoBehaviour {
         //print(maincamera.localRotation);
 
     }
-    //public void Turn() {
-    //    Input.gyro.enabled = false; Input.gyro.enabled = true;
-    //    gyrorotation = this.UpdateAsObservable( ).Where(cameraRotate => maincamera.localRotation.z > 60);
-    //    this.UpdateAsObservable( ).TakeUntil(gyrorotation).Subscribe(_ => {
-    //        Quaternion gyro = Input.gyro.attitude;
-    //        maincamera.localRotation = Quaternion.Euler(0 , 0 , 90) * ( new Quaternion(0 , 0 , gyro.z , gyro.w) );
-    //    });
-    //}
+    public void Turn() {
+        gyrorotation = this.UpdateAsObservable( ).Where(cameraRotate => maincamera.localRotation.z > 60);
+        this.UpdateAsObservable( ).TakeUntil(gyrorotation).Subscribe(_ => {
+            Quaternion gyro = Input.gyro.attitude;
+            maincamera.localRotation = ( new Quaternion(0 , 0 , gyro.z , gyro.w) );
+        });
+    }
 
 }
