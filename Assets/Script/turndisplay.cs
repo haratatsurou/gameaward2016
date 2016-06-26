@@ -9,7 +9,6 @@ public class turndisplay : MonoBehaviour {
         GameObject.Find("Main Camera").GetComponent<Animator>( ).enabled = false;
     }
     void Start() {
-        ChangeG( );
     }
     public void ChangeG() {
 
