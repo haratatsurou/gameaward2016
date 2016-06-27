@@ -27,7 +27,7 @@ public class InstanceObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public void OnBeginDrag(PointerEventData obj) {
         createobj = Instantiate(insobj , fromScreenPostoWorldPos(obj) , insobj.transform.rotation) as GameObject;
         createobj.name = this.gameObject.name;
-        createobj.GetComponent<BoxCollider>( ).isTrigger = true;
+        createobj.GetComponent<Collider>( ).isTrigger = true;
         StageManager.Instance.nowstage.setitem[setnum-1].SET_ITEM_FLAG = true;
         grayImage( );
         
