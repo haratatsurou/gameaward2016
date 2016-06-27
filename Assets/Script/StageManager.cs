@@ -9,7 +9,6 @@ public struct StageInfo {
     [Header("UI関連")]
     public string Reset_Scene_Name;
     public string Next_Scene_Name;
-    public string Dialog_Help_Message;
     [Header("設置するオブジェクト")]
     public setItem[] setitem;
     [Header("生成する雫")]
@@ -38,11 +37,11 @@ public class StageManager : SingletonMonoBehaviour<StageManager> {
     public StageInfo nowstage;
 
     public float worldTime;
-    private int oldstar;
+    public int oldstar;
     void Awake() {
        // nowstage = stageinfo[NowtheStage( )];
-        Time.timeScale = worldTime;
-        oldstar = StageManager.Instance.nowstage.GetStar;
+        //Time.timeScale = worldTime;
+        //oldstar = StageManager.Instance.nowstage.GetStar;
     }
     public int NowtheStage() {
         Regex rex = new Regex(@"[^0-9]");
@@ -62,6 +61,9 @@ public class StageManager : SingletonMonoBehaviour<StageManager> {
         } catch ( ArgumentException ) {//すでにキーがあるとき
             SaveManager.Instance.saveinfo[StageManager.Instance.nowstage.Reset_Scene_Name] = SaveManager.Instance.clearinfo;
         }
+#if UNITY_ANDROID
+        SaveManager.Instance.Save( );
+#endif
     }
     //スコア更新するか否か
     int highSCORE(int star) {

@@ -27,10 +27,10 @@ public class CreateButton : MonoBehaviour {
     }
     void Start() {
         Migration( );
+        
         //returnbutton = GameObject.Find("UI/Top/Return").GetComponent<Button>( );
-        //endINS( );
     }
-    void endINS() {
+  public  void endINS() {
         var endins = this.UpdateAsObservable( )
             .Where(_ => Limit - 1 < i);//制限に達したら水玉を出すのをやメル
         endins
