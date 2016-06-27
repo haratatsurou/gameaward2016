@@ -19,4 +19,5 @@ public class Reset : MonoBehaviour {
         //設置フラグをすべてリセット
         this.GetComponent<CreateButton>( ).ResetMatch( );
     }
+
 }

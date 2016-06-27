@@ -3,8 +3,9 @@ using System.Collections;
 
 public class callAudio : MonoBehaviour {
 
-	void Start () {
+	void OnEnable () {
         AudioManager.Instance.PlayBGM("soundofdesign");
+        AudioManager.Instance.GetComponent<AudioSource>( ).loop = true;
 	}
 
 }

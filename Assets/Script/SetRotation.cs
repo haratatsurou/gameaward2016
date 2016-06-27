@@ -17,15 +17,16 @@ public class SetRotation : MonoBehaviour {
     void Awake() {
 
         LongTap( );
-        SceneManager.LoadScene("SetUI" , LoadSceneMode.Additive);
+        if ( !SceneManager.GetSceneByName("SetUI").isLoaded ) {
+            SceneManager.LoadScene("SetUI" , LoadSceneMode.Additive);
+        }
     }
     void OnEnable() {
+        
         selectbak = GameObject.Find("selectback").GetComponent<SpriteRenderer>( );
         selectbak.color = new Color(0 , 0 , 0 , 0);
     }
-    void Start() {
-        longTap = longTap * StageManager.Instance.worldTime;
-    }
+
     void Update() {
     }
     public void LongTap() {

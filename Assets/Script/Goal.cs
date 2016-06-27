@@ -3,30 +3,33 @@ using System.Collections;
 using UniRx;
 using UnityEngine.UI;
 using UniRx.Triggers;
-
+using System;
 //くそコード
 public class Goal : MonoBehaviour {
     private GameObject RainDrop;
     private Text count;
     private Button @return;
+    private clearmessage clear;
     void Start() {
         //CountGoal();
         @return = GameObject.Find("UI/Top/Return").GetComponent<Button>( ); //リターンカウント
         RainDrop = StageManager.Instance.nowstage.Rain;
+       clear =GameObject.Find("clear").GetComponent<clearmessage>( );
 
     }
+    IDisposable goal;
     void CountGoal() {
-        var goal = this.OnTriggerEnterAsObservable( )
-            .Where(goaltag => goaltag.tag == "rain");
-        goal
+        goal= this.OnTriggerEnterAsObservable( )
+            .Where(goaltag => goaltag.tag == "rain")
             .Buffer(StageManager.Instance.nowstage.UnLimit-1)
             .FirstOrDefault( )
             .Subscribe(_ => {
                 StageClear( );
-            }).AddTo(this.gameObject);
+            }).AddTo(gameObject);
     }
     void StageClear() {
-        GameObject.Find("clear").GetComponent<clearmessage>( ).displaytext("ステージクリアー");
+        goal.Dispose( );
+        clear.displaytext("ステージクリアー");
     }
    
    public void GoalRain()
@@ -70,7 +73,7 @@ public class Goal : MonoBehaviour {
         dummy.tag = "otherrain";
 
         var rigidbody = dummy.GetComponent<Rigidbody>( );
-        float random = Random.Range(-17f , 5f);
+        float random = UnityEngine.Random.Range(-17f , 5f);
         rigidbody.AddForce(random , 0 , 0 );
         dummy.GetComponent<SphereCollider>( ).radius = 0.1f;
         rigidbody.mass = 0.1f;

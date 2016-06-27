@@ -4,7 +4,7 @@ using UniRx;
 using UnityEngine.UI;
 using UniRx.Triggers;
 using System;
-
+using UnityEngine.SceneManagement;
 public class halfGoal : MonoBehaviour {
     private GameObject RainDrop;
     public int count;
@@ -13,10 +13,11 @@ public class halfGoal : MonoBehaviour {
     private Goal goalobj;
     void Start() {
         //CountGoal();
-        GoalRain( );
+      
         @return = GameObject.Find("UI/Top/play").GetComponent<Button>( ); //リターンカウント
         RainDrop = StageManager.Instance.nowstage.Rain;
         goalobj = GameObject.Find("upgoal").GetComponent<Goal>( );
+        GoalRain( );
     }
     void CountGoal() {
         var goal = this.OnTriggerEnterAsObservable( )
@@ -25,10 +26,16 @@ public class halfGoal : MonoBehaviour {
             .Buffer(StageManager.Instance.nowstage.UnLimit - 1)
             .FirstOrDefault( )
             .Subscribe(_ => {
-                @return.interactable = true; //反転できるように
+                
                 try {
+                    @return.interactable = true; //反転できるように
                     GameObject.Find("system").GetComponent<startTOreturn>( ).Start_Return( ); //ボタンを変更する
-                } catch ( NullReferenceException ) { }
+                } catch ( NullReferenceException ) {
+         
+                }catch ( MissingReferenceException ) {
+
+                    @return.interactable = true; //反転できるように
+                }
 
             }).AddTo(this.gameObject);
     }

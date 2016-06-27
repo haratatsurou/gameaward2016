@@ -26,10 +26,11 @@ public class clearmessage : dialog {
         }
     }
     public void reset() {
-        SceneManager.LoadScene(StageManager.Instance.nowstage.Reset_Scene_Name);
+       
         StageManager.Instance.nowstage.GetStar = 0;
         GameObject.Find("system").GetComponent<CreateButton>( ).ResetMatch( );
         loadscene( );
+        SceneManager.LoadScene(StageManager.Instance.nowstage.Reset_Scene_Name);
     }
     public void loadscene() {
         GameObject.Find("clear").GetComponent<GraphicRaycaster>( ).enabled = false;
@@ -44,8 +45,9 @@ public class clearmessage : dialog {
         Physics.gravity = new Vector3(0 , Physics.gravity.y , 0);
     }
     public void Next() {
-        SceneManager.LoadScene(StageManager.Instance.nowstage.Next_Scene_Name);
         loadscene( );
+        SceneManager.LoadScene(StageManager.Instance.nowstage.Next_Scene_Name);
+       
     }
 }
 
