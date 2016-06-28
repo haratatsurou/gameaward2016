@@ -94,7 +94,8 @@ public class CreateButton : MonoBehaviour {
                 GameObject[] objs = GameObject.FindGameObjectsWithTag("road");
                 
                 foreach ( GameObject obj in objs ) {
-                    obj.GetComponent<operation>( ).colliders[1].isTrigger = false;
+                    var collider = obj.GetComponent<operation>( );
+                    collider.colliders[collider.arraynum-1].isTrigger = false;
                 }
             } else {
                 GameObject.Find("dialog").GetComponent<dialog>( ).display("オブジェクトが接触しているよ");

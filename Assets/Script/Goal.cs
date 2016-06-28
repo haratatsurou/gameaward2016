@@ -29,7 +29,7 @@ public class Goal : MonoBehaviour {
     }
     void StageClear() {
         goal.Dispose( );
-        clear.displaytext("ステージクリアー");
+        clear.displaytext();
     }
    
    public void GoalRain()
@@ -37,6 +37,7 @@ public class Goal : MonoBehaviour {
         var goal = this.OnTriggerEnterAsObservable()
             .Where(goaltag => goaltag.tag == "rain")
             .Subscribe(goaltag => {
+                AudioManager.Instance.PlaySE("decide");
                 StartCoroutine("destroyobj",goaltag.gameObject);
                 CountGoal( );
             }).AddTo(this.gameObject);

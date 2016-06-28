@@ -15,6 +15,7 @@ public class LoadScene : MonoBehaviour {
         this.UpdateAsObservable( ).FirstOrDefault( ).Subscribe(_ => {
             FadeManager.Instance.LoadLevel("Stage" + loadnum.ToString( ) , loadtime);
             this.GetComponent<GraphicRaycaster>( ).enabled = false;
+            AudioManager.Instance.PlaySE("decide");
         });
     }
     void Start() {

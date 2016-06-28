@@ -11,10 +11,13 @@ public class operation : MonoBehaviour {
     private Vector3 screenPoint;
     private Vector3 offset;
     public List<Collider> colliders;
+    public int arraynum;
     void Awake() {
+        arraynum = 0;
         foreach ( Collider collider in GetComponents<Collider>( ) ) {
             colliders.Add(collider);
             collider.isTrigger = true;
+            arraynum++;
         }
         this.gameObject.tag = "road";
     }

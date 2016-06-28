@@ -45,6 +45,7 @@ public class halfGoal : MonoBehaviour {
         var goal = this.OnTriggerEnterAsObservable( )
             .Where(goaltag => goaltag.tag == "rain")
             .Subscribe(goaltag => {
+                AudioManager.Instance.PlaySE("decide");
                 StartCoroutine("destroyobj" , goaltag.gameObject);
                 CountGoal( );
                 count++;

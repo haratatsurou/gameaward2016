@@ -15,8 +15,8 @@ public class startTOreturn : MonoBehaviour {
     void OnEnable() {
        var button = GameObject.Find(directory + "play");
         startbutton =button.GetComponent<Button>( );
-        text = GameObject.Find(directory + "play/Text").GetComponent<Text>( );
         image = button.GetComponent<Image>( );
+        image.sprite = startImage;
         Return_Start( );
     }
     public void Start_Return() {
@@ -37,13 +37,12 @@ public class startTOreturn : MonoBehaviour {
         startbutton.onClick.AsObservable( )
             .Subscribe(_ => {
                 this.GetComponent<CreateButton>( ).Create("upstart");
-
+                GameObject.Find("UI/Stick").GetComponent<moveUnderUI>( ).Down( );
                 
             });
     }
     void changeVisible(Sprite iconimage,string content) {
         image.sprite = iconimage;
-        text.text = content;
 
     }
 }

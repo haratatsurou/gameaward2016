@@ -6,19 +6,18 @@ using System;
 
 
 public class clearmessage : dialog {
-    private Text texts;
     public Sprite starSprite;
     private GameObject[] star=new GameObject[2];
 
     void Start() {
-        texts = GameObject.Find("clear/message").GetComponent<Text>( );
+
         this.GetComponent<Canvas>( ).enabled = false;
         star = GameObject.FindGameObjectsWithTag("UIstar");
     }
     //クリアしたときの情報を載せる
-    public new void displaytext(string contents) {
+    public void displaytext() {
         this.GetComponent<Canvas>( ).enabled = true;
-        texts.text = contents;
+        //texts.text = contents;
         StageManager.Instance.ClearInfo( );
         //取得したスターを表示-------------------------------
         for(int i=0 ;i<StageManager.Instance.nowstage.GetStar ;i++ ) {
@@ -27,7 +26,7 @@ public class clearmessage : dialog {
     }
     public void reset() {
        
-        StageManager.Instance.nowstage.GetStar = 0;
+        //StageManager.Instance.nowstage.GetStar = 0;
         GameObject.Find("system").GetComponent<CreateButton>( ).ResetMatch( );
         loadscene( );
         SceneManager.LoadScene(StageManager.Instance.nowstage.Reset_Scene_Name);

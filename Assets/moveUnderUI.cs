@@ -17,6 +17,5 @@ public class moveUnderUI : MonoBehaviour {
             });
     }
     void Start() {
-        Down( );
     }
 }

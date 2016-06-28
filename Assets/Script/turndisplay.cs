@@ -20,12 +20,16 @@ public class turndisplay : MonoBehaviour {
     void hoge() {
         Physics.gravity = -Physics.gravity;
         GameObject.Find("Main Camera").GetComponent<Animator>( ).enabled = false;
-        //ジョインとの変更------------------------------------------------------------------------------------
-        var underblock = GameObject.Find("underblock").GetComponent<HingeJoint>( );
-        underblock.axis = new Vector3(0 , 0 , -90f);
-        var topblock = GameObject.Find("topblock").GetComponent<HingeJoint>( );
-        topblock.axis= new Vector3(0 , 0 , -90f);
-        //-------------------------------------------------------------------------------------------------
+        try {
+            //ジョインとの変更------------------------------------------------------------------------------------
+            var underblock = GameObject.Find("underblock").GetComponent<HingeJoint>( );
+            underblock.axis = new Vector3(0 , 0 , -90f);
+            var topblock = GameObject.Find("topblock").GetComponent<HingeJoint>( );
+            topblock.axis = new Vector3(0 , 0 , -90f);
+            //-------------------------------------------------------------------------------------------------
+        } catch ( NullReferenceException){
+
+        }
         GameObject.Find("UI/Top/play").GetComponent<Button>( ).interactable = false;
         GameObject.Find("UI/Top/reset").GetComponent<Button>( ).interactable = true;
         var create = this.GetComponent<CreateButton>( );
