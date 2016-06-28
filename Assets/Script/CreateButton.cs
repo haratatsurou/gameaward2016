@@ -83,6 +83,7 @@ public class CreateButton : MonoBehaviour {
     }
     //初スタートするとき
     public void Create(string createpos = "upstart") {
+        Physics.gravity=new Vector3(Physics.gravity.x, -9.81f, Physics.gravity.z);
         i = 0;
         if (Match() ) {
             if ( !colliderobject ) {

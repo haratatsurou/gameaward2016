@@ -97,15 +97,16 @@ public class SetRotation : MonoBehaviour {
             .TakeUntil(this.UpdateAsObservable( ).Where(_ => Input.GetMouseButtonUp(0)))
             .Subscribe(_ => {
                 var hoge2 = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                var hoge1 = transform.InverseTransformPoint(hoge2);
+                //var hoge1 = transform.InverseTransformPoint(hoge2);
                 var y = hoge2.y - rotateObj.transform.localPosition.y;
-                //   var x= hoge2.x - rotateObj.transform.position.x;
-                if ( rotateObj.transform.localPosition.x - hoge2.x > 0 ) {
 
-                    y = -y;
-                }
-                rotateObj.transform.Rotate(new Vector3(0 , 0 , y) , Space.World);
+                ////if ( rotateObj.transform.localPosition.x - hoge2.x > 0 ) {
 
+                ////    y = -y;
+                ////}
+                //////rotateObj.transform.Rotate(new Vector3(0 , 0 , y) , Space.World);
+                var direction = new Vector3(hoge2.x , hoge2.y , rotateObj.transform.localPosition.z);
+                rotateObj.transform.LookAt(direction , Vector3.forward);
             });
 
         var stop = this.UpdateAsObservable( )
