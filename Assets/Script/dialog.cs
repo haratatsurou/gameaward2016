@@ -19,6 +19,7 @@ public class dialog : MonoBehaviour, function {
     }
     //dialogを表示する
     public void display(string text) {
+        AudioManager.Instance.PlaySE("cancelSE");
         this.GetComponent<Canvas>( ).enabled = true;
         Time.timeScale = 0;
         CreateButton.moveflag = true;

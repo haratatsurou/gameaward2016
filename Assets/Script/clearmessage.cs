@@ -24,6 +24,7 @@ public class clearmessage : dialog {
         //取得したスターを表示-------------------------------
         for(int i=0 ;i<StageManager.Instance.nowstage.GetStar ;i++ ) {
             star[i].GetComponent<Image>( ).sprite = starSprite; //後ろから取り出す
+            AudioManager.Instance.PlaySE("pointSE");
         }
     }
     public void reset() {

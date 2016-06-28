@@ -88,7 +88,7 @@ public class SetRotation : MonoBehaviour {
         //    .Subscribe(hoge => { print("asdf"); });
     }
     void ModeRotate(GameObject rotateObj) {
-        AudioManager.Instance.PlaySE("decide");
+        AudioManager.Instance.PlaySE("decideSE");
         rotateObj.GetComponent<sortLayer>( ).LayerName = "Forward";
         selectbak.color = new Color(0 , 0 , 0,0.5f);
         var rotate = this.UpdateAsObservable( )

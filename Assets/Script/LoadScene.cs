@@ -13,9 +13,9 @@ public class LoadScene : MonoBehaviour {
     public Sprite defimage;
     public void Load(int loadnum = 0) {
         this.UpdateAsObservable( ).FirstOrDefault( ).Subscribe(_ => {
+            AudioManager.Instance.PlaySE("selectSE");
             FadeManager.Instance.LoadLevel("Stage" + loadnum.ToString( ) , loadtime);
             this.GetComponent<GraphicRaycaster>( ).enabled = false;
-            AudioManager.Instance.PlaySE("decide");
         });
     }
     void Start() {
@@ -29,8 +29,8 @@ public class LoadScene : MonoBehaviour {
     }
     void OnEnable() {
         saveload( );
-        print("call");
-        AudioManager.Instance.PlayBGM("soundofdesignOP");
+        AudioManager.Instance.GetComponent<AudioSource>( ).loop = true;
+        AudioManager.Instance.PlayBGM("intro");
     }
     private List<string> keys = new List<string>( );
     //セーブデータ全部ロード
@@ -60,7 +60,7 @@ public class LoadScene : MonoBehaviour {
     }
     void Change(List<GameObject> stars , string key) {
         int starnum = SaveManager.Instance.saveinfo[key].getstar;
-        print("stageNmae=" + key + "starnum" + starnum);
+
         for ( int i = 0 ; i < starnum ; i++ ) {
             //クリアした画像にさしかえる
             stars[i].GetComponent<Image>( ).sprite = clearimage;
