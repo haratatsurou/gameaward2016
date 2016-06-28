@@ -39,14 +39,15 @@ public class StageManager : SingletonMonoBehaviour<StageManager> {
     public float worldTime;
     public int oldstar;
     void Awake() {
-       // nowstage = stageinfo[NowtheStage( )];
+        Screen.sleepTimeout = SleepTimeout.NeverSleep; //自動でスリープ入るのを無効にする
+        // nowstage = stageinfo[NowtheStage( )];
         //Time.timeScale = worldTime;
         //oldstar = StageManager.Instance.nowstage.GetStar;
     }
     public int NowtheStage() {
         Regex rex = new Regex(@"[^0-9]");
         int result = int.Parse(rex.Replace(SceneManager.GetActiveScene( ).name , ""));
-        return result-1;
+        return result - 1;
     }
     public void ClearInfo() {
         //クリア情報----------------------------------------------------------
@@ -68,6 +69,12 @@ public class StageManager : SingletonMonoBehaviour<StageManager> {
     }
     //スコア更新するか否か
     int highSCORE(int star) {
-        return Mathf.Max(oldstar,star);
+        return Mathf.Max(oldstar , star);
+    }
+    void Update() {
+        if ( Application.platform == RuntimePlatform.Android &&
+    ( Input.GetKey(KeyCode.Home) || Input.GetKey(KeyCode.Escape) || Input.GetKey(KeyCode.Menu) ) ) {
+            Application.Quit( );
+        }
     }
 }

@@ -15,6 +15,8 @@ public class CreateButton : MonoBehaviour {
     [HideInInspector]
     public int i;
     private int Limit;
+    [HideInInspector]
+    public int rementionnum;
   //  private Button returnbutton;
 
     StageInfo manager;
@@ -24,6 +26,7 @@ public class CreateButton : MonoBehaviour {
         Limit = manager.Limit;
         RainDrop = manager.Rain;
         span = manager.span;
+        rementionnum = Limit;
     }
     void Start() {
         Migration( );
@@ -32,7 +35,7 @@ public class CreateButton : MonoBehaviour {
     }
   public  void endINS() {
         var endins = this.UpdateAsObservable( )
-            .Where(_ => Limit - 1 < i);//制限に達したら水玉を出すのをやメル
+            .Where(_ => Limit - 1 < i);//制限に達したら水玉を出すのをやめる
         endins
             .Subscribe(_ => {
                 hoeg.Dispose( );
@@ -48,6 +51,7 @@ public class CreateButton : MonoBehaviour {
         i = 0;
         var intohalfGoal = GameObject.Find("downgoal").GetComponent<halfGoal>( ).count;
         Limit = intohalfGoal;
+        rementionnum = Limit;
         endINS( );
         //一定間隔で水玉を出す
         hoeg = Observable.Timer(TimeSpan.FromSeconds(span) , TimeSpan.FromSeconds(span)).Subscribe(_ => {
@@ -55,6 +59,7 @@ public class CreateButton : MonoBehaviour {
             Vector3 inspos = new Vector3(createPos.position.x , createPos.position.y -insposY , 0);
             Instantiate(RainDrop , inspos , Quaternion.identity);
             i++;
+            rementionnum--;
         });
         if ( createpos == "downstart" ) {
             GameObject.Find("downgoal").GetComponent<BoxCollider>( ).isTrigger = false;
@@ -90,6 +95,8 @@ public class CreateButton : MonoBehaviour {
                     moveflag = true;
                     GameObject.Find("Main Camera").GetComponent<ObservableUpdateTrigger>( ).enabled = false;
                     i++;
+                    rementionnum--;
+
                 });
                 GameObject[] objs = GameObject.FindGameObjectsWithTag("road");
                 

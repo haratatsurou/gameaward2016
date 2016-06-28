@@ -49,6 +49,7 @@ public class halfGoal : MonoBehaviour {
                 StartCoroutine("destroyobj" , goaltag.gameObject);
                 CountGoal( );
                 count++;
+
             });
     }
 
