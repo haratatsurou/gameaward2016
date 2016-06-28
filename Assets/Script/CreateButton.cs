@@ -95,8 +95,13 @@ public class CreateButton : MonoBehaviour {
                 
                 foreach ( GameObject obj in objs ) {
                     var collider = obj.GetComponent<operation>( );
-                    collider.colliders[collider.arraynum-1].isTrigger = false;
+                    Destroy(collider.colliders[0]);
+                    collider.colliders.RemoveAt(0);
+                    foreach(Collider col in collider.colliders ) {
+                        col.isTrigger = false;
+                    }
                 }
+
             } else {
                 GameObject.Find("dialog").GetComponent<dialog>( ).display("オブジェクトが接触しているよ");
             }

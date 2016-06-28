@@ -27,7 +27,7 @@ public class turndisplay : MonoBehaviour {
             var topblock = GameObject.Find("topblock").GetComponent<HingeJoint>( );
             topblock.axis = new Vector3(0 , 0 , -90f);
             //-------------------------------------------------------------------------------------------------
-        } catch ( NullReferenceException){
+        } catch ( NullReferenceException ) {
 
         }
         GameObject.Find("UI/Top/play").GetComponent<Button>( ).interactable = false;
@@ -50,7 +50,7 @@ public class turndisplay : MonoBehaviour {
         }
     }
     public void CreateStart(CreateButton create) {
-        create.Create( -0.5f, "downstart" );// 再びstart
+        create.Create(-0.5f , "downstart");// 再びstart
     }
 
 }

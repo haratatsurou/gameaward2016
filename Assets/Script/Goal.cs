@@ -8,11 +8,9 @@ using System;
 public class Goal : MonoBehaviour {
     private GameObject RainDrop;
     private Text count;
-    private Button @return;
     private clearmessage clear;
     void Start() {
         //CountGoal();
-        @return = GameObject.Find("UI/Top/Return").GetComponent<Button>( ); //リターンカウント
         RainDrop = StageManager.Instance.nowstage.Rain;
        clear =GameObject.Find("clear").GetComponent<clearmessage>( );
 
