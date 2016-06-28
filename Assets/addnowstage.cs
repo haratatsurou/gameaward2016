@@ -15,7 +15,6 @@ public class addnowstage : MonoBehaviour {
         stagemanager.oldstar = stagemanager.nowstage.GetStar;
         stagemanager.nowstage = stagemanager.stageinfo[stagemanager.NowtheStage( )];
         this.GetComponent<CreateButton>( ).endINS( );
-        print("ロードscene");
 
     }
 }

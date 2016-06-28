@@ -86,7 +86,7 @@ public class CreateButton : MonoBehaviour {
                     var createPos = GameObject.Find(createpos).transform;
                     Vector3 inspos = new Vector3(createPos.position.x , createPos.position.y - 0.1f , 0);
                     Instantiate(RainDrop , inspos , Quaternion.identity);
-                   
+                    GameObject.Find("UI/Stick").GetComponent<moveUnderUI>( ).Down( );
                     moveflag = true;
                     GameObject.Find("Main Camera").GetComponent<ObservableUpdateTrigger>( ).enabled = false;
                     i++;

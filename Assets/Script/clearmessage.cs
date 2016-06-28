@@ -8,15 +8,17 @@ using System;
 public class clearmessage : dialog {
     public Sprite starSprite;
     private GameObject[] star=new GameObject[2];
-
+    private Canvas canvas;
     void Start() {
 
         this.GetComponent<Canvas>( ).enabled = false;
         star = GameObject.FindGameObjectsWithTag("UIstar");
+        canvas= this.GetComponent<Canvas>( );
     }
     //クリアしたときの情報を載せる
     public void displaytext() {
-        this.GetComponent<Canvas>( ).enabled = true;
+        canvas= this.GetComponent<Canvas>( );
+        canvas.enabled = true;
         //texts.text = contents;
         StageManager.Instance.ClearInfo( );
         //取得したスターを表示-------------------------------

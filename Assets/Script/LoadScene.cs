@@ -19,6 +19,7 @@ public class LoadScene : MonoBehaviour {
         });
     }
     void Start() {
+
     }
     void ghoge() {
 #if UNITY_EDITOR
@@ -28,6 +29,8 @@ public class LoadScene : MonoBehaviour {
     }
     void OnEnable() {
         saveload( );
+        print("call");
+        AudioManager.Instance.PlayBGM("soundofdesignOP");
     }
     private List<string> keys = new List<string>( );
     //セーブデータ全部ロード
@@ -40,14 +43,12 @@ public class LoadScene : MonoBehaviour {
                 var parent = GameObject.Find("Canvas/" + key).transform;
                 stars = new List<GameObject>( );
                 foreach ( Transform star in parent ) { //スター取得
-                    if ( star.tag == "getObj" ) {
-                        //画像差し替える
+                        //画像差し替える（Default画像）
                         star.gameObject.GetComponent<Image>( ).sprite = defimage;
                         stars.Add(star.gameObject);
-                    }
                 }
 
-                Change(stars , parent.name);
+                Change(stars , key);
 
             }
         } catch ( KeyNotFoundException ) {
@@ -59,30 +60,31 @@ public class LoadScene : MonoBehaviour {
     }
     void Change(List<GameObject> stars , string key) {
         int starnum = SaveManager.Instance.saveinfo[key].getstar;
+        print("stageNmae=" + key + "starnum" + starnum);
         for ( int i = 0 ; i < starnum ; i++ ) {
             //クリアした画像にさしかえる
             stars[i].GetComponent<Image>( ).sprite = clearimage;
         }
     }
-#if UNITY_EDITOR
-    void SampleSaveData() {
-        info hoge = new info( );
-        hoge.getstar = (int)UnityEngine.Random.Range(0 , 4);
-        hoge.clear = Convert.ToBoolean((int)UnityEngine.Random.Range(0 , 1));
-        try {
+//#if UNITY_EDITOR
+//    void SampleSaveData() {
+//        info hoge = new info( );
+//        hoge.getstar = (int)UnityEngine.Random.Range(0 , 4);
+//        hoge.clear = Convert.ToBoolean((int)UnityEngine.Random.Range(0 , 1));
+//        try {
 
-            for ( int i = 1 ; i < 4 ; i++ ) {
-                SaveManager.Instance.saveinfo.Add("Stage" + i.ToString( ) , hoge);
-            }
-        } catch ( ArgumentException ) {
-            for ( int i = 1 ; i < 4 ; i++ ) {
-                SaveManager.Instance.saveinfo["Stage" + i.ToString( )] = hoge;
-            }
-        }
-    }
-    void OnDisable() {
-        SaveManager.Instance.Reset( );
-    }
-#endif
+//            for ( int i = 1 ; i < 4 ; i++ ) {
+//                SaveManager.Instance.saveinfo.Add("Stage" + i.ToString( ) , hoge);
+//            }
+//        } catch ( ArgumentException ) {
+//            for ( int i = 1 ; i < 4 ; i++ ) {
+//                SaveManager.Instance.saveinfo["Stage" + i.ToString( )] = hoge;
+//            }
+//        }
+//    }
+//    void OnDisable() {
+//        SaveManager.Instance.Reset( );
+//    }
+//#endif
 
 }

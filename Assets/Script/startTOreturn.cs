@@ -37,7 +37,7 @@ public class startTOreturn : MonoBehaviour {
         startbutton.onClick.AsObservable( )
             .Subscribe(_ => {
                 this.GetComponent<CreateButton>( ).Create("upstart");
-                GameObject.Find("UI/Stick").GetComponent<moveUnderUI>( ).Down( );
+                
                 
             });
     }

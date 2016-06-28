@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 public class SetRotation : MonoBehaviour {
     public LayerMask mask;
     [ Header("長押しした時間")]
-    public float longTap;
+    public float longTap=0.3f;
     float rotatePos = 0;
     private Vector3? oldmousepos;
 
@@ -22,7 +22,6 @@ public class SetRotation : MonoBehaviour {
         }
     }
     void OnEnable() {
-        
         selectbak = GameObject.Find("selectback").GetComponent<SpriteRenderer>( );
         selectbak.color = new Color(0 , 0 , 0 , 0);
     }
