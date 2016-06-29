@@ -16,7 +16,6 @@ public class deleateSavedata : MonoBehaviour {
         var deleate = this.UpdateAsObservable( )
             .Where(_ => Input.GetMouseButtonDown(0)).Skip(19);
         deleate
-            
             .Subscribe(_ => {
                 SaveManager.Instance.Reset( );
                 AudioManager.Instance.PlaySE("decideSE");
