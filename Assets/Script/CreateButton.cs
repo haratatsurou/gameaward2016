@@ -73,7 +73,7 @@ public class CreateButton : MonoBehaviour {
         for(int i=0 ;i<3 ;i++ ) {
             hoge.Add(a.setitem[i].SET_ITEM_FLAG);
         }
-        return hoge.All(_=>_==true);
+        return hoge.All(_=>_==  true);
     }
     public void ResetMatch() {
         for ( int i = 0 ; i < manager.setitem.Length ; i++ ) {
