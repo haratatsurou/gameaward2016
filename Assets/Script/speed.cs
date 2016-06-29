@@ -24,7 +24,7 @@ public class speed : MonoBehaviour
 
                if (Time.timeScale == 1)
                {
-                   AudioManager.Instance.PlaySE("speedupSE");
+                   AudioManager.Instance.PlaySE("decideSE");
                    StageManager.Instance.worldTime = 2;
                    Time.timeScale = StageManager.Instance.worldTime;
                    speedImage.sprite = image1;
@@ -32,7 +32,7 @@ public class speed : MonoBehaviour
                }
                else if (Time.timeScale == 2)
                {
-                   AudioManager.Instance.PlaySE("speeddownSE");
+                   AudioManager.Instance.PlaySE("decideSE");
                    StageManager.Instance.worldTime = 1;
                    Time.timeScale = StageManager.Instance.worldTime;
                    speedImage.sprite = iamge2;

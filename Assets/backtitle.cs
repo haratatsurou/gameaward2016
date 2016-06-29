@@ -14,7 +14,7 @@ public class backtitle : MonoBehaviour {
         thisbutton.onClick.AsObservable( )
             .FirstOrDefault( )
             .Subscribe(_ => {
-                AudioManager.Instance.PlaySE("openingSE");
+                 AudioManager.Instance.PlaySE("openingSE");
                 Destroy(GameObject.Find("Manager"));
                 FadeManager.Instance.LoadLevel("StartMenu" , loadtime);
             });

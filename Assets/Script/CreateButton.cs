@@ -5,6 +5,7 @@ using System;
 using UniRx.Triggers;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections.Generic;
 using System.Linq;
 public class CreateButton : MonoBehaviour {
     public static bool moveflag = false;
@@ -30,7 +31,8 @@ public class CreateButton : MonoBehaviour {
     }
     void Start() {
         Migration( );
-        
+        ResetMatch( );
+        print(Match( ));
         //returnbutton = GameObject.Find("UI/Top/Return").GetComponent<Button>( );
     }
   public  void endINS() {
@@ -66,15 +68,12 @@ public class CreateButton : MonoBehaviour {
         }
     }
     bool Match() {
-        bool flag = false;
-        for(int i=0 ;i<manager.setitem.Length ;i++ ) {
-            if( manager.setitem[i].SET_ITEM_FLAG ) {
-                flag= true;
-            }else {
-                flag= false;
-            }
+        var a = StageManager.Instance.nowstage;
+        List<bool> hoge = new List<bool>( );
+        for(int i=0 ;i<3 ;i++ ) {
+            hoge.Add(a.setitem[i].SET_ITEM_FLAG);
         }
-        return flag;
+        return hoge.All(_=>_==true);
     }
     public void ResetMatch() {
         for ( int i = 0 ; i < manager.setitem.Length ; i++ ) {

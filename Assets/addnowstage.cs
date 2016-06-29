@@ -15,6 +15,9 @@ public class addnowstage : MonoBehaviour {
         stagemanager.oldstar = stagemanager.nowstage.GetStar;
         stagemanager.nowstage = stagemanager.stageinfo[stagemanager.NowtheStage( )];
         this.GetComponent<CreateButton>( ).endINS( );
-
+        for ( int i = 0 ; i < 3 ; i++ )
+        {
+            StageManager.Instance.nowstage.setitem[i].SET_ITEM_FLAG = false;
+        }
     }
 }

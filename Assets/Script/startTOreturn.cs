@@ -27,7 +27,7 @@ public class startTOreturn : MonoBehaviour {
            .Subscribe(_ => {
                //ロジック変更
                this.GetComponent<turndisplay>( ).ChangeG( );
-               AudioManager.Instance.PlaySE("startSE");
+               AudioManager.Instance.PlaySE("decideSE");
            });
     }
     //リセット用
@@ -38,7 +38,7 @@ public class startTOreturn : MonoBehaviour {
             .Subscribe(_ => {
                 this.GetComponent<CreateButton>( ).Create("upstart");
 
-                AudioManager.Instance.PlaySE("startSE");
+                AudioManager.Instance.PlaySE("decideSE");
             });
     }
     void changeVisible(Sprite iconimage,string content) {

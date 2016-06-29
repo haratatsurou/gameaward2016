@@ -10,7 +10,7 @@ public class Reset : MonoBehaviour {
         var turnDisplay=GameObject.Find("system").GetComponent<turndisplay>( );
         var create = GameObject.Find("system").GetComponent<CreateButton>( );
         turnDisplay.Dispose(create);
-        AudioManager.Instance.PlaySE("resetSE");
+        AudioManager.Instance.PlaySE("decideSE");
         if ( Physics.gravity.y > 0 ) {
             Physics.gravity = -Physics.gravity;
         }
