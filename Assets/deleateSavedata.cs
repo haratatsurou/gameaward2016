@@ -5,24 +5,24 @@ using UniRx.Triggers;
 using UnityEngine.UI;
 
 public class deleateSavedata : MonoBehaviour {
-
+    private Text hoge;
 	// Use this for initialization
-	void Start () {
+	void OnEnable () {
+        hoge = GameObject.Find("Canvas/Text").GetComponent<Text>( );
         DeleateSaveData( );
 
     }
-	void DeleateSaveData() {
+    void DeleateSaveData() {
         var deleate = this.UpdateAsObservable( )
-            .Where(_ => Input.GetMouseButtonDown(0));
+            .Where(_ => Input.GetMouseButtonDown(0)).Skip(19);
         deleate
-            .Skip(19)
-            .FirstOrDefault()
+            
             .Subscribe(_ => {
                 SaveManager.Instance.Reset( );
                 AudioManager.Instance.PlaySE("decideSE");
-                GameObject.Find("Canvas/Text").GetComponent<Text>( ).text = "セーブデータは削除されました。";
-                Invoke("reset" , 5f);
-            });
+                hoge.text = "セーブデータは削除されました。";
+                //Invoke("reset" , 5f);
+            }).AddTo(this.gameObject);
     }
     void reset() {
         GameObject.Find("Canvas/Text").GetComponent<Text>( ).text = "";

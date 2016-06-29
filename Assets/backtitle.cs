@@ -7,15 +7,16 @@ public class backtitle : MonoBehaviour {
     Button thisbutton;
     public float loadtime;
     void Start() {
-        thisbutton = this.GetComponent<Button>( ); 
-
+        thisbutton = this.GetComponent<Button>( );
+        DeleateSaveData( );
     }
     void DeleateSaveData() {
         thisbutton.onClick.AsObservable( )
             .FirstOrDefault( )
             .Subscribe(_ => {
-                FadeManager.Instance.LoadLevel("StartMenu" , loadtime);
                 AudioManager.Instance.PlaySE("openingSE");
+                Destroy(GameObject.Find("Manager"));
+                FadeManager.Instance.LoadLevel("StartMenu" , loadtime);
             });
     }
 }

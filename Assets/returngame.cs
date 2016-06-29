@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class returngame : MonoBehaviour {
     private Button button;
     public float loadtime;
+    public IObservable<Unit> a;
     void Start() {
         button = this.GetComponent<Button>( );
         Invoke("returngames" , loadtime + 1f);
@@ -22,7 +23,8 @@ public class returngame : MonoBehaviour {
 #if UNITY_EDIOTR
         print("ゲームスタートOK");
 #endif
-        button.onClick.AsObservable( )
+         a = button.onClick.AsObservable( );
+        a
             .FirstOrDefault( )
             .Subscribe(_ => {
                 FadeManager.Instance.LoadLevel("StageSelect" , loadtime);
