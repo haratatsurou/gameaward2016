@@ -10,7 +10,9 @@ public class speed : MonoBehaviour
     private Button speedbutton;
     private Image speedImage;
     public Sprite image1, iamge2;
-
+    void OnEnable() {
+        Time.timeScale = 1;
+    }
     void Start()
     {
         speedbutton = GameObject.Find("UI/Top/speed").GetComponent<Button>();
@@ -22,6 +24,7 @@ public class speed : MonoBehaviour
 
                if (Time.timeScale == 1)
                {
+                   AudioManager.Instance.PlaySE("speedupSE");
                    StageManager.Instance.worldTime = 2;
                    Time.timeScale = StageManager.Instance.worldTime;
                    speedImage.sprite = image1;
@@ -29,6 +32,7 @@ public class speed : MonoBehaviour
                }
                else if (Time.timeScale == 2)
                {
+                   AudioManager.Instance.PlaySE("speeddownSE");
                    StageManager.Instance.worldTime = 1;
                    Time.timeScale = StageManager.Instance.worldTime;
                    speedImage.sprite = iamge2;
