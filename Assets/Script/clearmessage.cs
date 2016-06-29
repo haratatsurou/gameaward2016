@@ -17,6 +17,7 @@ public class clearmessage : dialog {
     }
     //クリアしたときの情報を載せる
     public void displaytext() {
+        Time.timeScale = 0;
         canvas= this.GetComponent<Canvas>( );
         canvas.enabled = true;
         //texts.text = contents;
@@ -32,6 +33,7 @@ public class clearmessage : dialog {
         //StageManager.Instance.nowstage.GetStar = 0;
         GameObject.Find("system").GetComponent<CreateButton>( ).ResetMatch( );
         loadscene( );
+        Time.timeScale = 1;
         SceneManager.LoadScene(StageManager.Instance.nowstage.Reset_Scene_Name);
     }
     public void loadscene() {
@@ -41,6 +43,7 @@ public class clearmessage : dialog {
         if ( Physics.gravity.y > 0 ) {
             Physics.gravity = -Physics.gravity;
         }
+        Physics.gravity = new Vector3(Physics.gravity.x , -9.81f , Physics.gravity.z);
         var turnDisplay = GameObject.Find("system").GetComponent<turndisplay>( );
         var create = GameObject.Find("system").GetComponent<CreateButton>( );
         turnDisplay.Dispose(create);
@@ -49,7 +52,7 @@ public class clearmessage : dialog {
     public void Next() {
         loadscene( );
         SceneManager.LoadScene(StageManager.Instance.nowstage.Next_Scene_Name);
-       
+        Time.timeScale = 1;
     }
 }
 

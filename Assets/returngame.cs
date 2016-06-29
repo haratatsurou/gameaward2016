@@ -11,7 +11,12 @@ public class returngame : MonoBehaviour {
     void Start() {
         button = this.GetComponent<Button>( );
         Invoke("returngames" , loadtime + 1f);
-        
+#if UNITY_EDIOTR
+        print("ゲームスタートOK");
+           SaveManager.Instance.Reset( );
+#endif
+
+
     }
     void returngames() {
 #if UNITY_EDIOTR
@@ -20,8 +25,8 @@ public class returngame : MonoBehaviour {
         button.onClick.AsObservable( )
             .FirstOrDefault( )
             .Subscribe(_ => {
-               FadeManager.Instance.LoadLevel("StageSelect", loadtime);
+                FadeManager.Instance.LoadLevel("StageSelect" , loadtime);
                 AudioManager.Instance.PlaySE("openingSE");
-           });
+            });
     }
 }

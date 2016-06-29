@@ -65,7 +65,6 @@ public class StageManager : SingletonMonoBehaviour<StageManager> {
 #if UNITY_ANDROID
         SaveManager.Instance.Save( );
 #endif
-        SaveManager.Instance.Save( );
     }
     //スコア更新するか否か
     int highSCORE(int star) {
