@@ -13,6 +13,7 @@ public class SetRotation : MonoBehaviour {
     float rotatePos = 0;
     private Vector3? oldmousepos;
 
+    //オブジェクトをクリックした時の拝啓画像
     private SpriteRenderer selectbak;
     void Awake() {
 
@@ -90,7 +91,7 @@ public class SetRotation : MonoBehaviour {
     void ModeRotate(GameObject rotateObj) {
         AudioManager.Instance.PlaySE("decideSE");
         rotateObj.GetComponent<sortLayer>( ).LayerName = "Forward";
-        selectbak.color = new Color(0 , 0 , 0,0.5f);
+        selectbak.color = new Color(1f , 1f  , 1f  , 0.7f);
         var rotate = this.UpdateAsObservable( )
             .Where(_ => Input.GetMouseButton(0));
         rotate
