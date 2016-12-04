@@ -18,7 +18,7 @@ public class CreateButton : MonoBehaviour {
     private int Limit;
     [HideInInspector]
     public int rementionnum;
-  //  private Button returnbutton;
+    //  private Button returnbutton;
 
     StageInfo manager;
     //private bool[] set;
@@ -35,7 +35,7 @@ public class CreateButton : MonoBehaviour {
         print(Match( ));
         //returnbutton = GameObject.Find("UI/Top/Return").GetComponent<Button>( );
     }
-  public  void endINS() {
+    public void endINS() {
         var endins = this.UpdateAsObservable( )
             .Where(_ => Limit - 1 < i);//制限に達したら水玉を出すのをやめる
         endins
@@ -48,7 +48,7 @@ public class CreateButton : MonoBehaviour {
             });
     }
     //帰り道用
-    public void Create(float insposY=0.1f,string createpos = "upstart") {
+    public void Create(float insposY = 0.1f , string createpos = "upstart") {
 
         i = 0;
         var intohalfGoal = GameObject.Find("downgoal").GetComponent<halfGoal>( ).count;
@@ -58,7 +58,7 @@ public class CreateButton : MonoBehaviour {
         //一定間隔で水玉を出す
         hoeg = Observable.Timer(TimeSpan.FromSeconds(span) , TimeSpan.FromSeconds(span)).Subscribe(_ => {
             var createPos = GameObject.Find(createpos).transform;
-            Vector3 inspos = new Vector3(createPos.position.x , createPos.position.y -insposY , 0);
+            Vector3 inspos = new Vector3(createPos.position.x , createPos.position.y - insposY , 0);
             Instantiate(RainDrop , inspos , Quaternion.identity);
             i++;
             rementionnum--;
@@ -70,10 +70,10 @@ public class CreateButton : MonoBehaviour {
     bool Match() {
         var a = StageManager.Instance.nowstage;
         List<bool> hoge = new List<bool>( );
-        for(int i=0 ;i<3 ;i++ ) {
+        for ( int i = 0 ; i < a.setitem.Length ; i++ ) {
             hoge.Add(a.setitem[i].SET_ITEM_FLAG);
         }
-        return hoge.All(_=>_==  true);
+        return hoge.All(_ => _ == true);
     }
     public void ResetMatch() {
         for ( int i = 0 ; i < manager.setitem.Length ; i++ ) {
@@ -82,9 +82,9 @@ public class CreateButton : MonoBehaviour {
     }
     //初スタートするとき
     public void Create(string createpos = "upstart") {
-        Physics.gravity=new Vector3(Physics.gravity.x, -9.81f, Physics.gravity.z);
+        Physics.gravity = new Vector3(Physics.gravity.x , -9.81f , Physics.gravity.z);
         i = 0;
-        if (Match() ) {
+        if ( Match( ) ) {
             if ( !colliderobject ) {
                 GameObject.Find("UI/Top/play").GetComponent<Button>( ).interactable = false;
                 hoeg = Observable.Timer(TimeSpan.FromSeconds(span) , TimeSpan.FromSeconds(span)).Subscribe(_ => {
@@ -99,23 +99,23 @@ public class CreateButton : MonoBehaviour {
 
                 });
                 GameObject[] objs = GameObject.FindGameObjectsWithTag("road");
-                
+
                 foreach ( GameObject obj in objs ) {
                     var collider = obj.GetComponent<operation>( );
                     Destroy(collider.colliders[0]);
                     collider.colliders.RemoveAt(0);
-                    foreach(Collider col in collider.colliders ) {
+                    foreach ( Collider col in collider.colliders ) {
                         col.isTrigger = false;
                     }
                 }
 
             } else {
-                GameObject.Find("dialog").GetComponent<dialog>( ).display("オブジェクトが接触しているよ");
+                GameObject.Find("dialog").GetComponent<dialog>( ).display("オブジェクトが接触しています");
             }
         } else {
-            GameObject.Find("dialog").GetComponent<dialog>( ).display("エラー置いてないオブジェクトがあるかもね");
+            GameObject.Find("dialog").GetComponent<dialog>( ).display("エラー\n置いてないオブジェクトがあります");
         }
-        
+
     }
 
 

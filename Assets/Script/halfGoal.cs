@@ -45,7 +45,8 @@ public class halfGoal : MonoBehaviour {
         var goal = this.OnTriggerEnterAsObservable( )
             .Where(goaltag => goaltag.tag == "rain")
             .Subscribe(goaltag => {
-                StartCoroutine("destroyobj" , goaltag.gameObject);
+                //StartCoroutine("destroyobj" , goaltag.gameObject);
+                StartCoroutine("changeOBJ" , goaltag.gameObject);
                 CountGoal( );
                 count++;
 
@@ -79,9 +80,19 @@ public class halfGoal : MonoBehaviour {
     void InstancedummyObj(Transform createPos , float n) {
 
         Vector3 inspos = new Vector3(createPos.position.x , createPos.position.y + n , createPos.position.z);
-
         var dummy = (GameObject)Instantiate(RainDrop , inspos , Quaternion.identity);
         dummy.tag = "otherrain";
+
+        var rigidbody = dummy.GetComponent<Rigidbody>( );
+        float random = UnityEngine.Random.Range(-17f , 7f);
+        rigidbody.AddForce(random , 0 , 0);
+        dummy.GetComponent<SphereCollider>( ).radius = 0.1f;
+        rigidbody.mass = 0.1f;
+    }
+    IEnumerator changeOBJ(GameObject dummy) {
+        yield return new WaitForSeconds(0.1f);
+        dummy.tag = "otherrain";
+
         var rigidbody = dummy.GetComponent<Rigidbody>( );
         float random = UnityEngine.Random.Range(-17f , 7f);
         rigidbody.AddForce(random , 0 , 0);

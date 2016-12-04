@@ -35,44 +35,55 @@ public class Goal : MonoBehaviour {
         var goal = this.OnTriggerEnterAsObservable()
             .Where(goaltag => goaltag.tag == "rain")
             .Subscribe(goaltag => {
-                StartCoroutine("destroyobj",goaltag.gameObject);
+                //StartCoroutine("destroyobj",goaltag.gameObject);
+                StartCoroutine("changeOBJ" , goaltag.gameObject);
                 CountGoal( );
             }).AddTo(this.gameObject);
     }
 
-    IEnumerator destroyobj(GameObject destroy) {
-        yield return new WaitForSeconds(0.1f);
-        this.UpdateAsObservable( )
-            .Subscribe(_ => {
-                var time = Time.deltaTime;
-                destroy.transform.localScale -= new Vector3(time , time , time);
+    //IEnumerator destroyobj(GameObject destroy) {
+    //    yield return new WaitForSeconds(0.1f);
+    //    this.UpdateAsObservable( )
+    //        .Subscribe(_ => {
+    //            var time = Time.deltaTime;
+    //            destroy.transform.localScale -= new Vector3(time , time , time);
 
-                if ( destroy.transform.localScale.y < 0 ) {
-                    Destroy(destroy);
-                    float n = 0.4f;
-                    var createPos = this.gameObject.transform;
+    //            if ( destroy.transform.localScale.y < 0 ) {
+    //                Destroy(destroy);
+    //                float n = 0.4f;
+    //                var createPos = this.gameObject.transform;
 
-                    if ( this.gameObject.name.Contains("up") ) {
-                        n = 1;
-                    }
-                    if ( this.gameObject.name.Contains("down") ) {
-                        n = -n;
-                    }
-                    InstancedummyObj(createPos , n);
-                }
-            })
-            .AddTo(destroy);
-    }
+    //                if ( this.gameObject.name.Contains("up") ) {
+    //                    n = 1;
+    //                }
+    //                if ( this.gameObject.name.Contains("down") ) {
+    //                    n = -n;
+    //                }
+    //                InstancedummyObj(createPos , n);
+    //            }
+    //        })
+    //        .AddTo(destroy);
+    //}
     //プールにオブジェクトを生成する
-    void InstancedummyObj(Transform createPos,float n) {
+    //void InstancedummyObj(Transform createPos,float n) {
 
-        Vector3 inspos = new Vector3(createPos.position.x , createPos.position.y + n , createPos.position.z);
-        var dummy = (GameObject)Instantiate(RainDrop , inspos , Quaternion.identity);
+    //    Vector3 inspos = new Vector3(createPos.position.x , createPos.position.y + n , createPos.position.z);
+    //    var dummy = (GameObject)Instantiate(RainDrop , inspos , Quaternion.identity);
+    //    dummy.tag = "otherrain";
+
+    //    var rigidbody = dummy.GetComponent<Rigidbody>( );
+    //    float random = UnityEngine.Random.Range(-17f , 5f);
+    //    rigidbody.AddForce(random , 0 , 0 );
+    //    dummy.GetComponent<SphereCollider>( ).radius = 0.1f;
+    //    rigidbody.mass = 0.1f;
+    //}
+    IEnumerator changeOBJ(GameObject dummy) {
+        yield return new WaitForSeconds(0.1f);
         dummy.tag = "otherrain";
 
         var rigidbody = dummy.GetComponent<Rigidbody>( );
-        float random = UnityEngine.Random.Range(-17f , 5f);
-        rigidbody.AddForce(random , 0 , 0 );
+        float random = UnityEngine.Random.Range(-17f , 7f);
+        rigidbody.AddForce(random , 0 , 0);
         dummy.GetComponent<SphereCollider>( ).radius = 0.1f;
         rigidbody.mass = 0.1f;
     }

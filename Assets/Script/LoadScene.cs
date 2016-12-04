@@ -12,12 +12,14 @@ public class LoadScene : MonoBehaviour {
     public Sprite clearimage;
     public Sprite defimage;
     public void Load(int loadnum = 0) {
-        this.UpdateAsObservable( ).FirstOrDefault( ).Subscribe(_ => {
+        //フェードが終わってるか否か
+        if (!FadeManager.Instance.isFading) {
             AudioManager.Instance.PlaySE("selectSE");
             AudioManager.Instance.GetComponent<AudioSource>( ).volume = 0.2f;
             FadeManager.Instance.LoadLevel("Stage" + loadnum.ToString( ) , loadtime);
+            //何回もクリックされるのを防止する
             this.GetComponent<GraphicRaycaster>( ).enabled = false;
-        });
+        }
     }
     void Start() {
 
@@ -44,16 +46,15 @@ public class LoadScene : MonoBehaviour {
                 var parent = GameObject.Find("Canvas/" + key).transform;
                 stars = new List<GameObject>( );
                 foreach ( Transform star in parent ) { //スター取得
-                        //画像差し替える（Default画像）
-                        star.gameObject.GetComponent<Image>( ).sprite = defimage;
-                        stars.Add(star.gameObject);
+                                                       //画像差し替える（Default画像）
+                    star.gameObject.GetComponent<Image>( ).sprite = defimage;
+                    stars.Add(star.gameObject);
                 }
 
                 Change(stars , key);
 
             }
         } catch ( KeyNotFoundException ) {
-            print("ぷすす");
         } catch ( NullReferenceException ) {
             print("ステージなかったわ");
         }
@@ -67,25 +68,25 @@ public class LoadScene : MonoBehaviour {
             stars[i].GetComponent<Image>( ).sprite = clearimage;
         }
     }
-//#if UNITY_EDITOR
-//    void SampleSaveData() {
-//        info hoge = new info( );
-//        hoge.getstar = (int)UnityEngine.Random.Range(0 , 4);
-//        hoge.clear = Convert.ToBoolean((int)UnityEngine.Random.Range(0 , 1));
-//        try {
+    //#if UNITY_EDITOR
+    //    void SampleSaveData() {
+    //        info hoge = new info( );
+    //        hoge.getstar = (int)UnityEngine.Random.Range(0 , 4);
+    //        hoge.clear = Convert.ToBoolean((int)UnityEngine.Random.Range(0 , 1));
+    //        try {
 
-//            for ( int i = 1 ; i < 4 ; i++ ) {
-//                SaveManager.Instance.saveinfo.Add("Stage" + i.ToString( ) , hoge);
-//            }
-//        } catch ( ArgumentException ) {
-//            for ( int i = 1 ; i < 4 ; i++ ) {
-//                SaveManager.Instance.saveinfo["Stage" + i.ToString( )] = hoge;
-//            }
-//        }
-//    }
-//    void OnDisable() {
-//        SaveManager.Instance.Reset( );
-//    }
-//#endif
+    //            for ( int i = 1 ; i < 4 ; i++ ) {
+    //                SaveManager.Instance.saveinfo.Add("Stage" + i.ToString( ) , hoge);
+    //            }
+    //        } catch ( ArgumentException ) {
+    //            for ( int i = 1 ; i < 4 ; i++ ) {
+    //                SaveManager.Instance.saveinfo["Stage" + i.ToString( )] = hoge;
+    //            }
+    //        }
+    //    }
+    //    void OnDisable() {
+    //        SaveManager.Instance.Reset( );
+    //    }
+    //#endif
 
 }

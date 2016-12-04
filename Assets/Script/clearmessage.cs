@@ -13,12 +13,16 @@ public class clearmessage : dialog {
 
         this.GetComponent<Canvas>( ).enabled = false;
         star = GameObject.FindGameObjectsWithTag("UIstar");
-        canvas= this.GetComponent<Canvas>( );
+        //canvas= this.GetComponent<Canvas>( );
+    }
+    void Awake() {
+        
     }
     //クリアしたときの情報を載せる
     public void displaytext() {
         Time.timeScale = 0;
-        canvas= this.GetComponent<Canvas>( );
+       //canvas = this.GetComponent<Canvas>( );
+        canvas = GameObject.Find("clear").GetComponent<Canvas>( );
         canvas.enabled = true;
         //texts.text = contents;
         StageManager.Instance.ClearInfo( );

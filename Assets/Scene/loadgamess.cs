@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class loadgamess : MonoBehaviour {
 
 	void Start () {
-        FadeManager.Instance.LoadLevel("StartMenu" , 1.4f);
+        FadeManager.Instance.LoadLevel("StartMenu" , 3f);
 	}
 	
 	void Update () {

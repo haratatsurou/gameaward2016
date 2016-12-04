@@ -45,7 +45,7 @@ public class StageManager : SingletonMonoBehaviour<StageManager> {
         //oldstar = StageManager.Instance.nowstage.GetStar;
     }
     public int NowtheStage() {
-        Regex rex = new Regex(@"[^0-9]");
+        Regex rex = new Regex(@"[^0-9]"); //数字のみ
         int result = int.Parse(rex.Replace(SceneManager.GetActiveScene( ).name , ""));
         return result - 1;
     }
@@ -54,15 +54,16 @@ public class StageManager : SingletonMonoBehaviour<StageManager> {
         SaveManager.Instance.clearinfo.clear = true;
         SaveManager.Instance.clearinfo.getstar = highSCORE(StageManager.Instance.nowstage.GetStar);
         //------------------------------------------------------------------
+
+        var Reset_Scene_Name = StageManager.Instance.nowstage.Reset_Scene_Name;
+        var clearinfo= SaveManager.Instance.clearinfo;
         try {
-            SaveManager.Instance.saveinfo.Add(
-                StageManager.Instance.nowstage.Reset_Scene_Name ,
-                SaveManager.Instance.clearinfo
-                );
+            SaveManager.Instance.saveinfo.Add(Reset_Scene_Name ,clearinfo);
         } catch ( ArgumentException ) {//すでにキーがあるとき
-            SaveManager.Instance.saveinfo[StageManager.Instance.nowstage.Reset_Scene_Name] = SaveManager.Instance.clearinfo;
+            SaveManager.Instance.saveinfo[Reset_Scene_Name] = SaveManager.Instance.clearinfo;
         }
 #if UNITY_ANDROID
+        //セーブ処理
         SaveManager.Instance.Save( );
 #endif
     }

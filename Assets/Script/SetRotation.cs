@@ -90,7 +90,7 @@ public class SetRotation : MonoBehaviour {
     void ModeRotate(GameObject rotateObj) {
         AudioManager.Instance.PlaySE("decideSE");
         rotateObj.GetComponent<sortLayer>( ).LayerName = "Forward";
-        selectbak.color = new Color(0 , 0 , 0,0.2f);
+        selectbak.color = new Color(0 , 0 , 0,0.5f);
         var rotate = this.UpdateAsObservable( )
             .Where(_ => Input.GetMouseButton(0));
         rotate
